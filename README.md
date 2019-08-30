@@ -1,7 +1,6 @@
-# CSCI-447-Project-1
-Using Naive Bayes Algorithm
+# CSCI 447: Project 1 — Naive Bayes Algorithm
 
-## Environment set up:
+## Environment Setup
 
 - Install [Anaconda](https://www.anaconda.com/distribution/#download-section), and make sure you have access to use `conda --version` from the command line.
 
