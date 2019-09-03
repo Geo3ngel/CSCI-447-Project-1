@@ -11,3 +11,8 @@
 - Then open the environment using the command `conda activate bayes`
 
 - TODO: Add python `filename` to run.
+
+## Sources to cite:
+- Must be academically based (No one off articles)
+- Must site algorithms
+- Keep a consistant format for the sake of sanity. I beg you, theres not much left.
