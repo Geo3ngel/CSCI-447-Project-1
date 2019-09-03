@@ -1,5 +1,10 @@
 # CSCI 447: Project 1 — Naive Bayes Algorithm
 
+## TODO:
+
+- Split Database into `training` sets & `prediction check` sets.
+      - Can just take a single .data file, and partition it into a `training set` and a `validation set`.
+
 ## Environment Setup
 
 - Install [Anaconda](https://www.anaconda.com/distribution/#download-section), and make sure you have access to use `conda --version` from the command line.
@@ -10,7 +15,7 @@
 
 - Then open the environment using the command `conda activate bayes`
 
-- TODO: Add python `filename` to run.
+- In the same command line, run `python Driver.py` to start the program.
 
 ## Sources to cite:
 - Must be academically based (No one off articles)
