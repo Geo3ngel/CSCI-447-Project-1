@@ -16,3 +16,10 @@ def string_to_set(value):
     value = value.strip('\n')
     value_set = value.split(",")
     return value_set
+
+# Deal with missing attributes
+    # Remove if 'low' number of missing attributes.
+    # Otherwise: Generate a random attribute from a pool of prexisting ones?
+        # Set up a queue of lines that need to do this, so we have the pool already fully generated.
+            # DOCUMENT THIS CHOICE.
+# 
