@@ -16,3 +16,9 @@
 - Must be academically based (No one off articles)
 - Must site algorithms
 - Keep a consistant format for the sake of sanity. I beg you, theres not much left.
+
+- O. L. Mangasarian and W. H. Wolberg: "Cancer diagnosis via linear 
+      programming", SIAM News, Volume 23, Number 5, September 1990, pp 1 & 18.
+
+Acknowledgements:
+- University of Wisconsin Hospitals, Madison from Dr. William H. Wolberg.
