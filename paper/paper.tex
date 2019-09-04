@@ -1,3 +1,5 @@
+% Template taken from https://www.sharelatex.com/templates/journals/template-for-the-journal-of-machine-learning-research-jmlr
+
 \documentclass[twoside,11pt]{article}
 
 % Any additional packages needed should be included after jmlr2e.
@@ -21,69 +23,74 @@
 
 % Short headings should be running head and authors last names
 
-\ShortHeadings{Learning with Mixtures of Trees}{Meil\u{a} and Jordan}
+\ShortHeadings{CSCI 447: Project 1}{Engel, Oster, Parker, Soule}
 \firstpageno{1}
 
 \begin{document}
 
-\title{Learning with Mixtures of Trees}
+\title{CSCI 447: Project 1}
 
-\author{\name Marina Meil\u{a} \email mmp@stat.washington.edu \\
-       \addr Department of Statistics\\
-       University of Washington\\
-       Seattle, WA 98195-4322, USA
+\author{\name George Engel \email GeoEngel.z@gmail.com \\
+       \addr Department of Engineering\\
+       Montana State University\\
+       Bozemane, MT 59715, USA
        \AND
-       \name Michael I.\ Jordan \email jordan@cs.berkeley.edu \\
-       \addr Division of Computer Science and Department of Statistics\\
-       University of California\\
-       Berkeley, CA 94720-1776, USA}
+       \name Troy Oster \email toster1011@gmail.com \\
+       \addr Department of Engineering\\
+       Montana State University\\
+       Bozeman, MT 59715, USA
+       \AND
+       \name Dana Parker \email danaharmonparker@gmail.com \\
+       \addr Department of Engineering\\
+       Montana State University\\
+       Bozeman, MT 59715, USA
+       \AND
+       \name Henry Soule \email hsoule427@gmail.com \\
+       \addr Department of Engineering\\
+       Montana State University\\
+       Bozeman, MT 59715, USA}
 
-\editor{Leslie Pack Kaelbling}
+\editor{}
 
 \maketitle
 
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
-This paper describes the mixtures-of-trees model, a probabilistic 
-model for discrete multidimensional domains.  Mixtures-of-trees 
-generalize the probabilistic trees of \citet{chow:68}
-in a different and complementary direction to that of Bayesian networks.
-We present efficient algorithms for learning mixtures-of-trees 
-models in maximum likelihood and Bayesian frameworks. 
-We also discuss additional efficiencies that can be
-obtained when data are ``sparse,'' and we present data 
-structures and algorithms that exploit such sparseness.
-Experimental results demonstrate the performance of the 
-model for both density estimation and classification. 
-We also discuss the sense in which tree-based classifiers
-perform an implicit form of feature selection, and demonstrate
-a resulting insensitivity to irrelevant attributes.
+
+Text goes here.
+% Original text:
+% This paper describes the mixtures-of-trees model, a probabilistic 
+% model for discrete multidimensional domains.  Mixtures-of-trees 
+% generalize the probabilistic trees of \citet{chow:68}
+% in a different and complementary direction to that of Bayesian networks.
+% We present efficient algorithms for learning mixtures-of-trees 
+% models in maximum likelihood and Bayesian frameworks. 
+% We also discuss additional efficiencies that can be
+% obtained when data are ``sparse,'' and we present data 
+% structures and algorithms that exploit such sparseness.
+% Experimental results demonstrate the performance of the 
+% model for both density estimation and classification. 
+% We also discuss the sense in which tree-based classifiers
+% perform an implicit form of feature selection, and demonstrate
+% a resulting insensitivity to irrelevant attributes.
 \end{abstract}
 
 \begin{keywords}
-  Bayesian Networks, Mixture Models, Chow-Liu Trees
+    Keywords, Go, Here
+%   Bayesian Networks, Mixture Models, Chow-Liu Trees
 \end{keywords}
 
 \section{Introduction}
 
-Probabilistic inference has become a core technology in AI,
-largely due to developments in graph-theoretic methods for the 
-representation and manipulation of complex probability 
-distributions~\citep{pearl:88}.  Whether in their guise as 
-directed graphs (Bayesian networks) or as undirected graphs (Markov 
-random fields), \emph{probabilistic graphical models} have a number 
-of virtues as representations of uncertainty and as inference engines.  
-Graphical models allow a separation between qualitative, structural
-aspects of uncertain knowledge and the quantitative, parametric aspects 
-of uncertainty...\\
-
-{\noindent \em Remainder omitted in this sample. See http://www.jmlr.org/papers/ for full paper.}
+Intro goes here.
 
 % Acknowledgements should go at the end, before appendices and references
 
-\acks{We would like to acknowledge support for this project
-from the National Science Foundation (NSF grant IIS-9988642)
-and the Multidisciplinary Research Program of the Department
-of Defense (MURI N00014-00-1-0637). }
+\acks{Acknowledgements go here.}
+
+% \acks{We would like to acknowledge support for this project
+% from the National Science Foundation (NSF grant IIS-9988642)
+% and the Multidisciplinary Research Program of the Department
+% of Defense (MURI N00014-00-1-0637). }
 
 % Manual newpage inserted to improve layout of sample file - not
 % needed in general before appendices/bibliography.
