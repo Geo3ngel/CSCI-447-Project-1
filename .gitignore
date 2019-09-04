@@ -6,3 +6,6 @@ __pycache__/fileIO\.cpython-37\.pyc
 *.fdb_latexmk
 *.fls
 *.log
+*.bbl
+*.blg
+*.synctex.gz
