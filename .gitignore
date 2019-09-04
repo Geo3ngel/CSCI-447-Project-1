@@ -9,3 +9,8 @@ __pycache__/fileIO\.cpython-37\.pyc
 *.bbl
 *.blg
 *.synctex.gz
+__pycache__/processData\.cpython-37\.pyc
+
+__pycache__/database\.cpython-36\.pyc
+
+__pycache__/fileIO\.cpython-36\.pyc
