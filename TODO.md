@@ -6,6 +6,32 @@
 
 - [x] This is a completed task
 
+---
+
+## LaTeX Paper
+
+<big>Taken from the assignment writeup, verbatim
+
+1. [x] Title and Author name(s)
+
+2. [ ] A brief, one paragraph abstract summarizing the results of the experiments
+
+3. [ ] Problem statement, including hypothesis
+
+4. [ ] Description of algorithms implemented
+
+5. [ ] Description of your experimental approach
+
+6. [ ] Presentation of the results of your experiments (in words, tables, and graphs)
+
+7. [ ] A discussion of the behavior of your algorithms, combined with any conclusions you can draw
+
+8. [ ] Summary
+
+9. [ ] References
+
+    - You should have at least one reference related to the algorithms implemented since you will know what it is by the time the assignment is due. You should also include a reference to the data sources, and any other references you consider to be relevant. You may not reference websites except for the data sets.
+
 ## Dana
 
 - [ ] Making a LaTeX outline
