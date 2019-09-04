@@ -1,5 +1,6 @@
 import fileIO
 
 print("Starting...")
-print(fileIO.process_database_file("databases/breast-cancer-wisconsin/wdbc.data"))
+db = fileIO.process_database_file("databases/breast-cancer-wisconsin/wdbc.data")
+db.to_string()
 print("Finished.")
