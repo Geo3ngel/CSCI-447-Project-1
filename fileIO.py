@@ -11,7 +11,8 @@ def process_database_file(file_name):
             
     file.close()
     database = db(data)
-    return db
+
+    return database
 
 # Converts comma seperated strings into a set of values.
 def string_to_set(value):
