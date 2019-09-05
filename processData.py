@@ -20,6 +20,19 @@ def string_to_set(value):
     value_set = value.split(",")
     return value_set
 
+# Either removes data with missing parameters, or extrapolates missing data using bootstraping methodology.
+def data_correction(database, parameter_count):
+    
+    correction_queue = []
+    
+    # Checks if the data from a specific row has all of the required parameters. If not, pops it from the list into a later processing queue.
+    for data in database:
+        if len(data) is not parameter_count:
+            correction_queue.append(data)
+            database.remove(data)
+            
+    print(correction_queue)
+
 # Deal with missing attributes
     # Remove if 'low' number of missing attributes.
     # Otherwise: Generate a random attribute from a pool of prexisting ones?

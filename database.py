@@ -9,3 +9,6 @@ class database:
     def to_string(self):
         print(self.data)
         
+    def get_data(self):
+        return self.data
+        
