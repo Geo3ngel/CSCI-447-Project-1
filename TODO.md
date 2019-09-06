@@ -34,7 +34,7 @@
 
 ## Dana
 
-- [ ] Making a LaTeX outline
+- [x] Make a LaTeX outline
 
     - Site algorithms as used
 

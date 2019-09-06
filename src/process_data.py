@@ -1,0 +1,68 @@
+""" -------------------------------------------------------------
+@file        process_data.py
+@authors     George Engel, Troy Oster, Dana Parker, Henry Soule
+@brief       Imports and pre-processes data repositories
+"""
+
+from database import database as db
+
+""" -------------------------------------------------------------
+@param  input_database  The database file (of type .data) to be processed
+
+@return     The pre-processed data from input_db as a database object
+            (see database.py)
+@brief      Loads the file contents into a database object
+"""
+# FIXME: Change to use numpy for efficiency's sake?
+def process_database_file(input_db):
+
+    current_db_file = open(input_db, 'r')
+    db_data = []
+
+    for line in current_db_file:
+        # Converts the string line from the file into a set of values.
+        db_data.append(csv_to_set(line))
+            
+    current_db_file.close()
+
+    return db(db_data)
+
+""" -------------------------------------------------------------
+@param  input_csv   Comma-seperated string to convert
+
+@return     A set of values found in input_csv
+@brief      Converts comma seperated strings into a set of values
+"""
+def csv_to_set(input_csv):
+    return input_csv.strip('\n').split(',')
+
+""" -------------------------------------------------------------
+@param  database        Input database to operate upon per @brief
+@param  parameter_count FIXME: I don't know what this represents.
+                               What do you mean by a "parameter" here? —Dana
+
+@return     TODO (unless this doesn't return anything and I'm dumb) —Dana
+@brief      Either removes data with missing parameters,
+            or extrapolates missing data using bootstraping methodology.
+"""
+def data_correction(input_db, parameter_count):
+    
+    # TODO: Describe the local variable(s) below —Dana
+    correction_queue = []
+    
+    # Checks if the data from a specific row
+    # has all of the required parameters.
+    # If not, pops it from the list into a later processing queue.
+    for data in input_db:
+        if len(data) is not parameter_count:
+            correction_queue.append(data)
+            input_db.remove(data)
+            
+    print(correction_queue)
+
+# TODO: Implement the pseudocode below —Dana
+# Deal with missing attributes
+    # If 'low' number of missing attributes: remove.
+    # Else: Generate a random attribute from a pool of prexisting ones?
+        # Set up a queue of lines that need to do this, so we have the pool already fully generated.
+            # TODO: DOCUMENT THIS CHOICE.
