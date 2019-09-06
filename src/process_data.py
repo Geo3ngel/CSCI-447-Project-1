@@ -38,29 +38,33 @@ def csv_to_set(input_csv):
 
 """ -------------------------------------------------------------
 @param  database        Input database to operate upon per @brief
-@param  parameter_count FIXME: I don't know what this represents.
-                               What do you mean by a "parameter" here? —Dana
+@param  attribute_count The amount of expected attributes for each row of data.
 
-@return     TODO (unless this doesn't return anything and I'm dumb) —Dana
+@return     input_db, correction_que : returns the 'clean' rows of data (input_db), and the rows of any malformed data (correction_queue).
+            PS: You aren't dumb Dana -George
 @brief      Either removes data with missing parameters,
             or extrapolates missing data using bootstraping methodology.
 """
-def data_correction(input_db, parameter_count):
+def data_correction(input_db, attribute_count):
     
-    # TODO: Describe the local variable(s) below —Dana
+    # Holds the rows of data that appear to be missing some attributes
     correction_queue = []
     
     # Checks if the data from a specific row
     # has all of the required parameters.
     # If not, pops it from the list into a later processing queue.
     for data in input_db:
-        if len(data) is not parameter_count:
+        if len(data) is not attribute_count:
             correction_queue.append(data)
             input_db.remove(data)
             
     print(correction_queue)
 
-# TODO: Implement the pseudocode below —Dana
+    return input_db, correction_queue
+
+# Deals with missing attributes of data by etiher removing them, if the number of 
+def extrapolate():
+    
 # Deal with missing attributes
     # If 'low' number of missing attributes: remove.
     # Else: Generate a random attribute from a pool of prexisting ones?
