@@ -1,4 +1,6 @@
 
+import numpy as np
+
 def separateData(attributes, data, attToClassify):
     """
     [[1,2,3],[1,2,3]]
@@ -18,11 +20,17 @@ def separateData(attributes, data, attToClassify):
 
 
 def attributeCount(subset): #TODO find a better name for this function
-    # acquire list of attributes
-    attributes = []
-    
-    for a in attributes:
-        getCount()
+    # get dimensions of subset
+    rows, cols = subset.shape
+    for col in subset.T:
+        for val in col:
+            # https://ask.sagemath.org/question/10279/frequency-count-in-numpy-array/
+            # got this count method from above link
+            count = list(col).count(val)
+            print(val, ': ', count) 
+        print('----------')
+    # for a in attributes:
+    #     getCount(a, subset)
 
 
 def getCount(attribute, data):
