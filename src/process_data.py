@@ -58,15 +58,15 @@ def data_correction(input_db, attribute_count):
             correction_queue.append(data)
             input_db.remove(data)
             
-    print(correction_queue)
-
     return input_db, correction_queue
 
 # Deals with missing attributes of data by etiher removing them, if the number of 
 def extrapolate():
+    pass
     
 # Deal with missing attributes
     # If 'low' number of missing attributes: remove.
     # Else: Generate a random attribute from a pool of prexisting ones?
         # Set up a queue of lines that need to do this, so we have the pool already fully generated.
             # TODO: DOCUMENT THIS CHOICE.
+            
