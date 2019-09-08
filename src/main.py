@@ -19,7 +19,7 @@ print("Starting...")
 # TODO: Make pathing manager for choosing database -George
 db = process_data.process_database_file("../databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
 
-normal_data, irregular_data = process_data.data_correction(db.get_data(), 11)
+normal_data, irregular_data = process_data.identify_missing_data(db.get_data())
 
 print("\nNormal Data:")
 print_database(normal_data)

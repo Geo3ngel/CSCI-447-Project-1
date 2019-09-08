@@ -60,6 +60,22 @@ def data_correction(input_db, attribute_count):
             
     return input_db, correction_queue
 
+# Finds any ambiguous/missing data and returns the rows of the relevant database in which missing parameters occur.
+def identify_missing_data(input_db):
+    
+    # Holds the rows of data that appear to be missing some attributes
+    correction_queue = []
+    for data in input_db:
+        
+        # Check for a missing parameter character:
+        if '?' in data:
+            # Adds data to que for correction
+            correction_queue.append(data)
+            # Removes row of data from database
+            input_db.remove(data)
+            
+    return input_db, correction_queue
+
 # Deals with missing attributes of data by etiher removing them, if the number of 
 def extrapolate():
     pass
