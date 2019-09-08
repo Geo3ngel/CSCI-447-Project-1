@@ -72,4 +72,7 @@ print("Irregular data total:", len(irregular_data))
 print("Regular data total:", len(normal_data))
 print("Corrected data total:", len(corrected_data))
 
+# This is the total database once the missing values have been filled in.
+repaired_database = normal_data + corrected_data
+
 print("\nFinished.")
