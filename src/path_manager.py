@@ -23,7 +23,8 @@ class pathManager:
         
     # Returns the entire path of the database collection folder.
     def get_databases_dir(self):
-        return os.path.join(self.ROOT_DIR, self.databases_folder)
+        database_dir = os.path.join(self.ROOT_DIR, self.databases_folder)
+        return database_dir
     
     # Sets the databases folder to the foldername specified, which will then be used to generate the new folder path.
     def set_databases_folder(self, folder_name):
@@ -35,13 +36,13 @@ class pathManager:
     ### FINDING FILES/DIRECTORIES
         
     # Finds files in a specified directory with a specified extension.
-    def find_files(dir, ext):
+    def find_files(self, dir, ext):
         ext_len = -1*len(ext)
         for (dirpath, dirnames, filenames) in os.walk(dir):
             return filenames    
     
     # Returns folders in a specified directory
-    def find_folders(dir):
+    def find_folders(self, dir):
         folders = []
         for (dirpath, dirnames, filenames) in os.walk(dir):
             folders.extend(dirnames)
