@@ -11,7 +11,8 @@ class pathManager:
         # Initializes the folder name for the directory that holds the databases.
         self.databases_folder = "databases"
         
-        self.update_databases_dir()
+        # Initialize this to empty
+        self.current_selected_folder = ""
         
         print("Path manager Initialized!")
         
@@ -20,16 +21,16 @@ class pathManager:
     def get_ROOT_DIR(self):
         return self.ROOT_DIR
         
-    def update_databases_dir(self):
-        # Joins the database folder in such a way that is supported on every OS.
-        self.databases_dir = os.path.join(self.ROOT_DIR, self.databases_folder)
-        
+    # Returns the entire path of the database collection folder.
     def get_databases_dir(self):
-        return self.databases_dir
+        return os.path.join(self.ROOT_DIR, self.databases_folder)
     
+    # Sets the databases folder to the foldername specified, which will then be used to generate the new folder path.
     def set_databases_folder(self, folder_name):
-        self.databases_folder = folder_name
-        self.update_databases_dir()
+        if validate_dir(os.path.join(self.ROOT_DIR, folder_name)):
+            self.databases_folder = folder_name
+        else:
+            print("Please enter a valid database collection directory.")
         
     ### FINDING FILES/DIRECTORIES
         
@@ -47,8 +48,6 @@ class pathManager:
             break
 
         return folders
-    
-    
     
     ### VALIDATING FILES/DIRECTORIES
     
