@@ -5,6 +5,7 @@
 """
 
 from database import database as db
+import random
 
 """ -------------------------------------------------------------
 @param  input_database  The database file (of type .data) to be processed
@@ -78,9 +79,13 @@ def identify_missing_data(input_db):
             
     return normal, correction_queue
 
-# Deals with missing attributes of data by etiher removing them, if the number of 
-def extrapolate():
-    pass
+def extrapolate_data(normal_data, malformed_data):
+    corrected_data = []
+    
+    for data in malformed_data:
+        corrected_data.append(bootstrap_selection(normal_data, data))
+        
+    return corrected_data
     
 # Deal with missing attributes
     # If 'low' number of missing attributes: remove.
@@ -88,3 +93,16 @@ def extrapolate():
         # Set up a queue of lines that need to do this, so we have the pool already fully generated.
             # TODO: DOCUMENT THIS CHOICE.
             
+# Fills in the unknown/missing data from existing normal data randomly.
+def bootstrap_selection(normal_data, malformed_row):
+    length = len(malformed_row)
+    
+    corrected_data = []
+    
+    for index in range(length):
+        if malformed_row[index] is "?":
+            corrected_data.append(random.choice(normal_data)[index])
+        else:
+            corrected_data.append(malformed_row[index])
+            
+    return corrected_data
