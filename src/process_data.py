@@ -65,16 +65,18 @@ def identify_missing_data(input_db):
     
     # Holds the rows of data that appear to be missing some attributes
     correction_queue = []
+    normal = []
     for data in input_db:
         
         # Check for a missing parameter character:
-        if '?' in data:
+        if "?" in data:
             # Adds data to que for correction
             correction_queue.append(data)
-            # Removes row of data from database
-            input_db.remove(data)
+        else:
+            # Adds data to normal database (won't have to be modified further via extrapolation)
+            normal.append(data)
             
-    return input_db, correction_queue
+    return normal, correction_queue
 
 # Deals with missing attributes of data by etiher removing them, if the number of 
 def extrapolate():

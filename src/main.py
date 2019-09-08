@@ -49,13 +49,14 @@ path_manager.set_current_selected_folder(selected_database)
 
 # Finds the data file in that directory and stores the file name
 database_data = path_manager.find_files(path_manager.get_current_selected_dir(), ".data")[0]
-print(database_data)
 
 full_path = os.path.join(path_manager.get_current_selected_dir(), database_data)
 
 # Processes the file path of the database into a pre processed database ready to be used as a learning/training set.
 db = process_data.process_database_file(full_path)
 
+
+### Sanity checks. TODO: move to a unit test case file.
 normal_data, irregular_data = process_data.identify_missing_data(db.get_data())
 
 print("\nNormal Data:")
@@ -63,5 +64,8 @@ print_database(normal_data)
 
 print("\nIrregular Data:")
 print_database(irregular_data)
+
+print("Irregular data total:", len(irregular_data))
+print("Regular data total:", len(normal_data))
 
 print("\nFinished.")
