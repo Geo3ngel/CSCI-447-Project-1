@@ -4,6 +4,7 @@
 @brief       The file that runs the program
 """
 import process_data
+from path_manager import pathManager as pm
 
 # Cleaner print outs for the sake of my sanity.
 def print_database(database):
@@ -28,3 +29,5 @@ print("\nIrregular Data:")
 print_database(irregular_data)
 
 print("\nFinished.")
+
+test = pm()
