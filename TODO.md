@@ -43,9 +43,9 @@
 - [ ] Begin respective algorithm
 
 ## George
-
+- [x] User input for selecting database to use
+- [x] Clean Database of missing attributes
 - [ ] Split Database into `training` sets and `prediction check` sets.
-    
     - Can just take a single .data file, and partition it into a `training set` and a `validation set`.
 
 ## Henry
