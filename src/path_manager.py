@@ -15,6 +15,8 @@ class pathManager:
         
         print("Path manager Initialized!")
         
+    ### DATABASE PATH RELATED:    
+    
     def get_ROOT_DIR(self):
         return self.ROOT_DIR
         
@@ -29,6 +31,27 @@ class pathManager:
         self.databases_folder = folder_name
         self.update_databases_dir()
         
+    ### FINDING FILES/DIRECTORIES
+        
+    # Finds files in a specified directory with a specified extension.
+    def find_files(dir, ext):
+        ext_len = -1*len(ext)
+        for (dirpath, dirnames, filenames) in os.walk(dir):
+            return filenames    
+    
+    # Returns folders in a specified directory
+    def find_folders(dir):
+        folders = []
+        for (dirpath, dirnames, filenames) in os.walk(dir):
+            folders.extend(dirnames)
+            break
+
+        return folders
+    
+    
+    
+    ### VALIDATING FILES/DIRECTORIES
+    
     # Returns True if the file path entered is valid/non-empty
     def validate_file(self, file_path):
         if file_path is None:
