@@ -23,23 +23,43 @@ class pathManager:
         
     # Returns the entire path of the database collection folder.
     def get_databases_dir(self):
-        database_dir = os.path.join(self.ROOT_DIR, self.databases_folder)
-        return database_dir
+        return os.path.join(self.ROOT_DIR, self.databases_folder)
     
     # Sets the databases folder to the foldername specified, which will then be used to generate the new folder path.
     def set_databases_folder(self, folder_name):
-        if validate_dir(os.path.join(self.ROOT_DIR, folder_name)):
+        if self.validate_dir(os.path.join(self.ROOT_DIR, folder_name)):
             self.databases_folder = folder_name
         else:
             print("Please enter a valid database collection directory.")
         
+    # Gets the currently selected folder
+    def get_current_selected_folder(self):
+        return self.current_selected_folder
+    
+    # Sets the currently selected folder
+    def set_current_selected_folder(self, folder_name):
+        if self.validate_dir(os.path.join(self.get_databases_dir(), folder_name)):
+            self.current_selected_folder = folder_name
+        else:
+            print("Error: Invalid directory for currently selected folder:", folder_name, "@", os.path.join(self.get_databases_dir(), folder_name))
+    
+    def get_current_selected_dir(self):
+        return os.path.join(self.get_databases_dir(), self.current_selected_folder)
+    
     ### FINDING FILES/DIRECTORIES
         
     # Finds files in a specified directory with a specified extension.
     def find_files(self, dir, ext):
-        ext_len = -1*len(ext)
-        for (dirpath, dirnames, filenames) in os.walk(dir):
-            return filenames    
+        ext_len = len(ext)
+        
+        files = []
+        
+        for file in os.listdir(dir):
+            if file.endswith(ext):
+                files.append(file)
+        
+        return files
+                
     
     # Returns folders in a specified directory
     def find_folders(self, dir):

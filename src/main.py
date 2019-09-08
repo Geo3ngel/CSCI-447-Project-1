@@ -3,6 +3,7 @@
 @authors     George Engel, Troy Oster, Dana Parker, Henry Soule
 @brief       The file that runs the program
 """
+import os
 import process_data
 from path_manager import pathManager as pm
 
@@ -18,7 +19,7 @@ def select_database(databases):
     
     # Selection loop for database
     while(not chosen):
-        print("Enter one of the databases displayed:", databases)
+        print("\nEnter one of the databases displayed:", databases)
         database = input("Database: ")
         if database in databases:
             print("Selected:", database)
@@ -37,25 +38,30 @@ def print_database(database):
         for row in database:
             print(row)
 
-print("Starting...")
-# TODO: Enter user input for pathing. -George
-# TODO: Make pathing manager for choosing database -George
-db = process_data.process_database_file("../databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
-
 # Initializes path manager with default directory as databases.
 path_manager = pm()
 
-# TODO: select target for data read in!
-print(path_manager.get_databases_dir())
-print("Databases: \n", path_manager.find_folders(path_manager.get_databases_dir()))
-select_database(path_manager.find_folders(path_manager.get_databases_dir()))
+# Loads in a list of database folders for the user to select as the current database.
+selected_database = select_database(path_manager.find_folders(path_manager.get_databases_dir()))
+
+# Sets the selected database folder in the path manager for referencing via full path.
+path_manager.set_current_selected_folder(selected_database)
+
+# Finds the data file in that directory and stores the file name
+database_data = path_manager.find_files(path_manager.get_current_selected_dir(), ".data")[0]
+print(database_data)
+
+full_path = os.path.join(path_manager.get_current_selected_dir(), database_data)
+
+# Processes the file path of the database into a pre processed database ready to be used as a learning/training set.
+db = process_data.process_database_file(full_path)
 
 normal_data, irregular_data = process_data.identify_missing_data(db.get_data())
 
-# print("\nNormal Data:")
-# print_database(normal_data)
+print("\nNormal Data:")
+print_database(normal_data)
 
-# print("\nIrregular Data:")
-# print_database(irregular_data)
+print("\nIrregular Data:")
+print_database(irregular_data)
 
-# print("\nFinished.")
+print("\nFinished.")
