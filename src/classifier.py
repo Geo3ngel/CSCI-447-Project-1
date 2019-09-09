@@ -86,12 +86,6 @@ import copy
 def calculate_attr_probs(data, attributes, attr_to_classify):
     classified_data = separate_data(attributes, data, attr_to_classify)['class']
     data_table = genDataTable(attributes, data, attr_to_classify)
-    # {'Iris-setosa': {
-    #     'sepal length': {'5.1': 8, '4.9': 4, '4.7': 2}, 
-    #     'sepal width': {'3.5': 6, '3.0': 6, '3.2': 5, }, 
-    #     'petal length': {'1.4': 12, '1.3': 7, '1.5': 14}, 
-    #     'petal width': {'0.2': 28, '0.4': 7, '0.3': 7}
-    # }
     prob_table = copy.deepcopy(data_table)
     for classifier, count_list in prob_table.items():
         # print(classifier, ": ")
