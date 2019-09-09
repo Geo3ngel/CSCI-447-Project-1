@@ -45,6 +45,7 @@
 ## George
 - [x] User input for selecting database to use
 - [x] Clean Database of missing attributes
+    -use bootstrapping esc method of selecting missing attributes from normal rows with no missing atributes.
 - [ ] Split Database into `training` sets and `prediction check` sets.
     - Can just take a single .data file, and partition it into a `training set` and a `validation set`.
 
@@ -53,3 +54,12 @@
 - [ ] Step 2
 
 - [ ] Step 3
+
+## Anyone:
+- [ ] Implement K-fold cross validation
+    - [ ] determine bin size by dividing by k and rounding down. (10 arbitrarily chosen for this assignment) 
+    - [ ] split data up into bins
+    - [ ] Keep one bin as a testing bin, use the others for training
+    - [ ] run k (10) learning experiments 
+    - [ ] Average test results from k learning experiments as our algorithms accuracy
+    - [ ] return learning experiments test set & training set with the best accuracy.
