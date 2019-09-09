@@ -48,6 +48,7 @@ def genDataTable(attributes, data, attr_to_classify):
                         dataTable[row[index_of_class]][attributes[attributeIndex]][row[attributeIndex]] = 0
                     dataTable[row[index_of_class]][attributes[attributeIndex]][row[attributeIndex]] = dataTable[row[index_of_class]][attributes[attributeIndex]][row[attributeIndex]] + 1
     return dataTable
+
 # TODO: Come up with a new name for this function?
 # TODO: Comment once it's working Dana
 # def getNumOfAttributes(subset):
@@ -78,4 +79,26 @@ def calculate_ratios(raw_data, classified_data):
     ratios = {}
 
     for data_class in classified_data:
-        print("asdf")
+        print(data_class)
+
+
+import copy
+def calculate_attr_probs(data, attributes, attr_to_classify):
+    classified_data = separate_data(attributes, data, attr_to_classify)['class']
+    data_table = genDataTable(attributes, data, attr_to_classify)
+    # {'Iris-setosa': {
+    #     'sepal length': {'5.1': 8, '4.9': 4, '4.7': 2}, 
+    #     'sepal width': {'3.5': 6, '3.0': 6, '3.2': 5, }, 
+    #     'petal length': {'1.4': 12, '1.3': 7, '1.5': 14}, 
+    #     'petal width': {'0.2': 28, '0.4': 7, '0.3': 7}
+    # }
+    prob_table = copy.deepcopy(data_table)
+    for classifier, count_list in prob_table.items():
+        # print(classifier, ": ")
+        for val, val_counts in count_list.items():
+            # print(val, ": ", val_counts)
+            for val, count in val_counts.items():
+                prob = count / (len(classified_data[classifier]) + len(attributes))
+                val_counts[val] = prob
+
+    print(prob_table)        
