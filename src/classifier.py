@@ -78,15 +78,7 @@ def classify_db(attrs, db, class_idx):
     # Return the completed data structure per the form in @return
     return data_tbl
 
-# """ -------------------------------------------------------------
-# @param  db  The pre-processed data already classified by classify_db()
-
-# @return     A dictionary/table of probabilities of each attribute value (i.e. response)
-#             occuring in each class
-# @brief      Converts each attribute value/response count into a probability
-#             of that value occuring within its class.
-#             IMPORTANT: This is step 3 of "the algorithm"
-# """
+# -----------
 # def calc_prob_of_response(raw_data, classified_data):
 
 #     ratios = {}
@@ -94,25 +86,25 @@ def classify_db(attrs, db, class_idx):
 #     for data_class in classified_data:
 #         print(data_class)
 
-""" -------------------------------------------------------------
-Calculate probabilities for each attribute value
-This is step 2 in the algorithm
-@param data_tbl a data_table created by the classify_db() function
-"""
-def calculate_probs(data_tbl):
+# """ -------------------------------------------------------------
+# Calculate probabilities for each attribute value
+# This is step 2 in the algorithm
+# @param data_tbl a data_table created by the classify_db() function
+# """
+# def calculate_probs(data_tbl):
     # Iterate over each class in data_tbl
-    for classifier, values in data_tbl.items():
-        for val in values:
-            if val != 'count':
-                # Loop thru each value count and calculate the probabilities
-                for count in data_tbl[classifier][val]:
-                    data_tbl[classifier][val][count][1] = data_tbl[classifier][val][count][0] / data_tbl[classifier]['count']
+    # for classifier, values in data_tbl.items():
+    #     for val in values:
+    #         if val != 'count':
+    #             # Loop thru each value count and calculate the probabilities
+    #             for count in data_tbl[classifier][val]:
+    #                 data_tbl[classifier][val][count][1] = data_tbl[classifier][val][count][0] / data_tbl[classifier]['count']
 
 
-"""-------------------------------------------------------------
-Old function to calculate attribute probabilities.
-Used the genDataTable function that we no longer have
-"""
+# -------------------------------------------------------------
+# Old function to calculate attribute probabilities.
+# Used the genDataTable function that we no longer have
+# 
 # import copy
 # def calculate_attr_probs(data, attributes, attr_to_classify):
 #     # classified_data = separate_data(attributes, data, attr_to_classify)['class']
@@ -127,12 +119,11 @@ Used the genDataTable function that we no longer have
 #     return prob_table
 
 
-"""-------------------------------------------------------------
-Guess the class of an example
-@param example a row from the test set that we are trying to classify
-@param training_data_tbl the training data
-@param class_idx the index of the column that stores the class for each row in the data
-"""
+# -------------------------------------------------------------
+# Guess the class of an example
+# @param example a row from the test set that we are trying to classify
+# @param training_data_tbl the training data
+# @param class_idx the index of the column that stores the class for each row in the data
 def calculate_class(example, training_data_tbl, class_idx):
     print("Example: ", example)
     C = [] # Array to store probabilities of each class
@@ -152,27 +143,34 @@ def calculate_class(example, training_data_tbl, class_idx):
         C.append(prob)
 
     print(C)
-def calc_prob_of_response(db):
 
-    # Our dictionary of probabilities as described in @return
-    probs = Tree()
+""" -------------------------------------------------------------
+@param  db  The pre-processed data already classified by classify_db()
+
+@return     A dictionary/table of probabilities of each attribute value (i.e. response)
+            occuring in each class
+@brief      Converts each attribute value/response count into a probability
+            of that value occuring within its class.
+            IMPORTANT: This is step 3 of "the algorithm"
+"""
+def calc_prob_of_response(db):
 
     # For each class in the database...
     for db_class in db:
-        probs[db_class] = Tree()
 
         # Acquire the total number of classes
         # and remove that value from the local db variable
         class_count = db[db_class].pop('count')
         
         # For each attribute within the class...
+        # "Divide the number of examples that match that attribute value (plus one)..."
+        # "...by the number of examples in the class (plus d) (d being number of attributes)"
         for attr in db[db_class]:
-            probs[db_class][attr] = Tree()
 
-            # "Divide the number of examples that match that attribute value (plus one)..."
-            # "...by the number of examples in the class (plus d) (d being number of attributes"
-            for val, val_count in db[db_class][attr].items():
-                probs[db_class][attr][val] = (val_count + 1) / (class_count + len(db_class) - 1)
+            for key in db[db_class][attr].keys():
+                print('values = ' + str(db[db_class][attr][key][1]))
+                db[db_class][attr][key][1] = \
+                (db[db_class][attr][key][0] + 1) / \
+                (class_count + len(db_class))
 
-    
-    return probs
+    return db
