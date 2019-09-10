@@ -1,4 +1,4 @@
-from classifier import separate_data, genDataTable, calculate_attr_probs
+from classifier import separate_data, genDataTable, calculate_attr_probs, calculate_class
 # from classifier import genDataTable
 import os
 import process_data
@@ -34,7 +34,13 @@ data_table = genDataTable(attrs, normal_data, 'class')
 #     for inst in data_table[clss]:
 #         print(inst, ": ", data_table[clss][inst])
 
-calculate_attr_probs(normal_data, attrs, 'class')
+prob_table = calculate_attr_probs(normal_data, attrs, 'class')
+calculate_class(normal_data[0], normal_data, classified_data, prob_table, attrs)
+# for c, probs in prob_table.items():
+#     print(c, ": ", probs)
+
+
+
 
 
 

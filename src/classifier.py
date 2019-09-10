@@ -88,11 +88,41 @@ def calculate_attr_probs(data, attributes, attr_to_classify):
     data_table = genDataTable(attributes, data, attr_to_classify)
     prob_table = copy.deepcopy(data_table)
     for classifier, count_list in prob_table.items():
-        # print(classifier, ": ")
         for val, val_counts in count_list.items():
-            # print(val, ": ", val_counts)
             for val, count in val_counts.items():
-                prob = count / (len(classified_data[classifier]) + len(attributes))
+                prob = (count + 1) / (len(classified_data[classifier]) + len(attributes))
                 val_counts[val] = prob
 
-    print(prob_table)        
+    return prob_table
+
+# Make a dict out of the data_point
+# Key is the attribute, value is the val for that attribute in this data point
+def prepare_data_point(point, attributes): 
+    data_dict = dict()
+    for i in range(len(point)):
+        data_dict[attributes[i]] = point[i]
+    
+    return data_dict
+
+def calculate_class(data_point, training_data, classified_data, prob_table, attributes):
+    print(data_point)
+    classes = prob_table.keys()
+    
+    Q = dict() # Proportion of dataset for each class
+    C = []
+    
+    for c in classes:
+        Q[c] = len(classified_data[c]) / len(training_data)
+
+    for c,v in prob_table.items():
+        prob = 1
+        for i in range(len(data_point) - 1):
+            val = prob_table[c][attributes[i]][data_point[i]]
+            if val == {}:
+                continue
+            else:
+                prob = prob * val
+        C.append(prob * Q[c])
+    
+    print(C)
+            
