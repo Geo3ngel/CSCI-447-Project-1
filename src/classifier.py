@@ -13,56 +13,72 @@
             (described in @brief)
 @brief      This method creates a dictionary of the classes present for a given attribute
             (form illustrated in @return)
+FIXME: Commented out because nothing uses this (Dana)
 """
-import collections
-def separate_data(attributes, data, attr_to_classify):
-    # attributes:     ["Foo"..."Bar"]
-    # data:           [[1,2,3],[1,2,3]]
-    # att_to_classify: "Foo", A string matching the column name, or attribute, of the dataset
-    # return { <Attribute to classify by>: { <ClassValue>:[<example or row>] } }
-    # Creating a dictionary to hold the class types
-    index_of_class = attributes.index(attr_to_classify)
-    data_classes = {attr_to_classify:{} }
-    for rowIndex in range(len(data)):
-        example = data[rowIndex]
-        if example[index_of_class] not in data_classes[attr_to_classify]:
-            data_classes[attr_to_classify][example[index_of_class]] = []
-        data_classes[attr_to_classify][example[index_of_class]].append(example)
-    return data_classes
-#Referenced/Copied https://stackoverflow.com/questions/39272862/is-printing-defaultdict-supposed-to-be-ugly-non-human-readable-by-default
-# User Martineau for how to be able to declare nested keys without using nested if statements
-# Didn't feel the need to reinvent the wheel, also it is only for data storage purposes
+# import collections
+# def separate_data(attributes, data, attr_to_classify):
+#     class_idx = attributes.index(attr_to_classify)
+#     data_classes = {attr_to_classify:{} }
+#     for row_idx in range(len(data)):
+#         example = data[row_idx]
+#         if example[class_idx] not in data_classes[attr_to_classify]:
+#             data_classes[attr_to_classify][example[class_idx]] = []
+#         data_classes[attr_to_classify][example[class_idx]].append(example)
+#     return data_classes
+
+""" -------------------------------------------------------------
+@reference  https://stackoverflow.com/questions/39272862/is-printing-defaultdict-supposed-to-be-ugly-non-human-readable-by-default
+Reason: Didn't feel the need to re-invent the wheel.
+        Also it is only for data storage purposes.
+
+@brief  Allows for nested keys in a dictionary.
+"""
 class Tree(dict):
     def __missing__(self, key):
         value = self[key] = type(self)()
         return value
 
-def genDataTable(attributes, data, attr_to_classify):
-    dataTable = Tree()
-    index_of_class = attributes.index(attr_to_classify)
-    for rowIndex in range(len(data)):
-        row = data[rowIndex]
-        for attributeIndex in range(len(row)) :
-                if attributeIndex != index_of_class:
-                    if row[attributeIndex] not in dataTable[row[index_of_class]][attributes[attributeIndex]]:
-                        dataTable[row[index_of_class]][attributes[attributeIndex]][row[attributeIndex]] = 0
-                    dataTable[row[index_of_class]][attributes[attributeIndex]][row[attributeIndex]] = dataTable[row[index_of_class]][attributes[attributeIndex]][row[attributeIndex]] + 1
-    return dataTable
+""" -------------------------------------------------------------
+@param  attrs       A list of strings, each representing the name of an attribute
+@param  db          A list of examples/samples of a database repository
+@param  class_idx   The column number matching an index from @param attrs
+                    representing our attribute to classify by
 
-# TODO: Come up with a new name for this function?
-# TODO: Comment once it's working Dana
-# def getNumOfAttributes(subset):
-#     # acquire list of attributes
-#     attributes = []
+@return    A dictionary in the form of:
+           { class -> { attribute -> { response type -> number of such responses }}}}
+@brief     Given a Tree object (see above), return a classified data structure
+"""
 
-#     for a in attributes:
-#         getCount()
+def classify_db(attrs, db, class_idx):
+    data_tbl = Tree()
 
-# def getCount(attribute, data):
-#     pass
+    # For each sample in the database...
+    for row in db:
 
-# TODO:  Finish docstring for this function when convenient Dana
-# FIXME: Ratios of what? Describe in @brief? 
+        # Get a count for the current class
+        if 'count' not in data_tbl[row[class_idx]].keys():
+            data_tbl[row[class_idx]]['count'] = 0
+        data_tbl[row[class_idx]]['count'] += 1
+
+        # For each attribute in the current row..
+        for attr_idx in range(len(row)):
+
+            # If the current attribute isn't the "class" attribute or the class's count...
+            if attr_idx != class_idx and row[attr_idx] != 'count':
+
+                # If the current attribute isn't already in
+                # the data_tbl for the current class...
+                if row[attr_idx] not in data_tbl[row[class_idx]][attrs[attr_idx]]:
+
+                    # Make the current attribute a key for the current class
+                    # and make that attribute's response count
+                    data_tbl[row[class_idx]][attrs[attr_idx]][row[attr_idx]] = 0
+                
+                # Increment the response count by 1
+                data_tbl[row[class_idx]][attrs[attr_idx]][row[attr_idx]] += 1
+
+    # Return the completed data structure per the form in @return
+    return data_tbl
 
 """ -------------------------------------------------------------
 @param  raw_data            TODO
@@ -74,7 +90,7 @@ def genDataTable(attributes, data, attr_to_classify):
 @reference  https://www.geeksforgeeks.org/iterate-over-a-dictionary-in-python/
             Reason: To learn how to iterate over a dictionary in python
 """
-def calculate_ratios(raw_data, classified_data):
+def calc_prob_of_response(raw_data, classified_data):
 
     ratios = {}
 
