@@ -5,6 +5,7 @@
 """
 import os
 import process_data
+import classifier
 from path_manager import pathManager as pm
 
 # Asks for user to select a database from a list presented from current database collection directory.
@@ -63,16 +64,30 @@ corrected_data = process_data.extrapolate_data(normal_data, irregular_data)
 print("\nNormal Data:")
 print_database(normal_data)
 
-print("\nIrregular Data:")
+# -------------------------------------------------------------
+
+print("\n\n\n\n\nIrregular Data:")
 print_database(irregular_data)
 
-print("Corrected Irregular Data:")
+# -------------------------------------------------------------
+
+print("\n\n\n\n\nCorrected Irregular Data:")
 print_database(corrected_data)
 print("Irregular data total:", len(irregular_data))
 print("Regular data total:", len(normal_data))
 print("Corrected data total:", len(corrected_data))
 
-# This is the total database once the missing values have been filled in.
-repaired_database = normal_data + corrected_data
+# repaired_db is the total database once the missing values have been filled in.
+repaired_db = normal_data + corrected_data
+
+# -------------------------------------------------------------
+
+print("\nRunning classifier...")
+print('\n\n\n\n\nRunning classify_db():')
+
+temp_attr_headers = ['pol','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16','a17']
+classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
+
+print(classified_data)
 
 print("\nFinished.")
