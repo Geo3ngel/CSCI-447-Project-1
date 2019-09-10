@@ -1,4 +1,4 @@
-from classifier import classify_db, calculate_class, calculate_probs
+import classifier
 # from classifier import genDataTable
 import os
 import process_data
@@ -18,9 +18,10 @@ normal_data = normal_data[0:len(normal_data)-1] # last row is empty so the code 
 
 attrs = ["sepal length", "sepal width", "petal length", "petal width", "class"] 
 # classified_data = separate_data(attrs, normal_data, "class")['class']
-classified_data = classify_db(attrs, normal_data, 4)
-calculate_probs(classified_data)
-calculate_class(normal_data[0], classified_data, 4)
+classified_data = classifier.classify_db(attrs, normal_data, 4)
+classified_data = classifier.calc_prob_of_response(classified_data)
+
+classifier.calculate_class(normal_data[0], classified_data, 4)
 
 
 

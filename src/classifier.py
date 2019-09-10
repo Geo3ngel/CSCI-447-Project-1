@@ -168,7 +168,6 @@ def calc_prob_of_response(db):
         for attr in db[db_class]:
 
             for key in db[db_class][attr].keys():
-                print('values = ' + str(db[db_class][attr][key][1]))
                 db[db_class][attr][key][1] = \
                 (db[db_class][attr][key][0] + 1) / \
                 (class_count + len(db_class))
