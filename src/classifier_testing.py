@@ -20,7 +20,7 @@ attrs = ["sepal length", "sepal width", "petal length", "petal width", "class"]
 # classified_data = separate_data(attrs, normal_data, "class")['class']
 classified_data = classify_db(attrs, normal_data, 4)
 calculate_probs(classified_data)
-print(classified_data)
+calculate_class(normal_data[0], classified_data, 4)
 
 
 

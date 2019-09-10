@@ -97,6 +97,7 @@ def calc_prob_of_response(raw_data, classified_data):
 
 """ -------------------------------------------------------------
 Calculate probabilities for each attribute value
+This is step 2 in the algorithm
 @param data_tbl a data_table created by the classify_db() function
 """
 def calculate_probs(data_tbl):
@@ -108,51 +109,47 @@ def calculate_probs(data_tbl):
                 for count in data_tbl[classifier][val]:
                     data_tbl[classifier][val][count][1] = data_tbl[classifier][val][count][0] / data_tbl[classifier]['count']
 
+
 """-------------------------------------------------------------
 Old function to calculate attribute probabilities.
 Used the genDataTable function that we no longer have
 """
-import copy
-def calculate_attr_probs(data, attributes, attr_to_classify):
-    # classified_data = separate_data(attributes, data, attr_to_classify)['class']
-    data_table = classify_db(attributes, data, attr_to_classify)
-    prob_table = copy.deepcopy(data_table)
-    for classifier, count_list in prob_table.items():
-        for val, val_counts in count_list.items():
-            for val, count in val_counts.items():
-                prob = (count + 1) / (len(classified_data[classifier]) + len(attributes))
-                val_counts[val] = prob
+# import copy
+# def calculate_attr_probs(data, attributes, attr_to_classify):
+#     # classified_data = separate_data(attributes, data, attr_to_classify)['class']
+#     data_table = classify_db(attributes, data, attr_to_classify)
+#     prob_table = copy.deepcopy(data_table)
+#     for classifier, count_list in prob_table.items():
+#         for val, val_counts in count_list.items():
+#             for val, count in val_counts.items():
+#                 prob = (count + 1) / (len(classified_data[classifier]) + len(attributes))
+#                 val_counts[val] = prob
 
-    return prob_table
+#     return prob_table
 
-# Make a dict out of the data_point
-# Key is the attribute, value is the val for that attribute in this data point
-def prepare_data_point(point, attributes): 
-    data_dict = dict()
-    for i in range(len(point)):
-        data_dict[attributes[i]] = point[i]
-    
-    return data_dict
 
-def calculate_class(data_point, training_data, classified_data, prob_table, attributes):
-    print(data_point)
-    classes = prob_table.keys()
-    
-    Q = dict() # Proportion of dataset for each class
-    C = []
-    
-    for c in classes:
-        Q[c] = len(classified_data[c]) / len(training_data)
-
-    for c,v in prob_table.items():
+"""-------------------------------------------------------------
+Guess the class of an example
+@param example a row from the test set that we are trying to classify
+@param training_data_tbl the training data
+@param class_idx the index of the column that stores the class for each row in the data
+"""
+def calculate_class(example, training_data_tbl, class_idx):
+    print("Example: ", example)
+    C = [] # Array to store probabilities of each class
+    # Iterate over each class in training data table
+    for classifier in training_data_tbl:
         prob = 1
-        for i in range(len(data_point) - 1):
-            val = prob_table[c][attributes[i]][data_point[i]]
-            if val == {}:
-                continue
-            else:
-                prob = prob * val
-        C.append(prob * Q[c])
-    
+        idx = 0
+        # Iterate through values for each classifier
+        for attr in training_data_tbl[classifier]:
+            if attr != 'count':
+                if idx != class_idx:
+                    if training_data_tbl[classifier][attr][example[idx]][1] != {}:
+                        prob *= training_data_tbl[classifier][attr][example[idx]][1]
+                    else:
+                        prob *= 0
+                idx = idx + 1
+        C.append(prob)
+
     print(C)
-            
