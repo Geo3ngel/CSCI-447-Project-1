@@ -38,6 +38,14 @@
 
     - Site algorithms as used
 
+- [x] Update classified data structure to include a count, and some refractoring
+
+- [x] Make a probability data structure
+
+    - [ ] Check if the numbers are correct
+
+        - Numbers don't add to one?
+
 ## Troy
 
 - [ ] Begin respective algorithm

@@ -90,4 +90,9 @@ classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
 
 print(classified_data)
 
+print("\n\nRunning calc_prob_of_response():")
+probs = classifier.calc_prob_of_response(classified_data)
+print('\n\nprobs:\n')
+print(probs)
+
 print("\nFinished.")

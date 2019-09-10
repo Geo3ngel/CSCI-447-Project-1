@@ -78,22 +78,21 @@ def classify_db(attrs, db, class_idx):
     # Return the completed data structure per the form in @return
     return data_tbl
 
-""" -------------------------------------------------------------
-@param  raw_data            TODO
-@param  classified_data     TODO
+# """ -------------------------------------------------------------
+# @param  db  The pre-processed data already classified by classify_db()
 
-@return     TODO (iff this function returns something, else: delete)
-@brief      TODO
+# @return     A dictionary/table of probabilities of each attribute value (i.e. response)
+#             occuring in each class
+# @brief      Converts each attribute value/response count into a probability
+#             of that value occuring within its class.
+#             IMPORTANT: This is step 3 of "the algorithm"
+# """
+# def calc_prob_of_response(raw_data, classified_data):
 
-@reference  https://www.geeksforgeeks.org/iterate-over-a-dictionary-in-python/
-            Reason: To learn how to iterate over a dictionary in python
-"""
-def calc_prob_of_response(raw_data, classified_data):
+#     ratios = {}
 
-    ratios = {}
-
-    for data_class in classified_data:
-        print(data_class)
+#     for data_class in classified_data:
+#         print(data_class)
 
 """ -------------------------------------------------------------
 Calculate probabilities for each attribute value
@@ -153,3 +152,27 @@ def calculate_class(example, training_data_tbl, class_idx):
         C.append(prob)
 
     print(C)
+def calc_prob_of_response(db):
+
+    # Our dictionary of probabilities as described in @return
+    probs = Tree()
+
+    # For each class in the database...
+    for db_class in db:
+        probs[db_class] = Tree()
+
+        # Acquire the total number of classes
+        # and remove that value from the local db variable
+        class_count = db[db_class].pop('count')
+        
+        # For each attribute within the class...
+        for attr in db[db_class]:
+            probs[db_class][attr] = Tree()
+
+            # "Divide the number of examples that match that attribute value (plus one)..."
+            # "...by the number of examples in the class (plus d) (d being number of attributes"
+            for val, val_count in db[db_class][attr].items():
+                probs[db_class][attr][val] = (val_count + 1) / (class_count + len(db_class) - 1)
+
+    
+    return probs
