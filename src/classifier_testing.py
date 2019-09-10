@@ -1,4 +1,4 @@
-from classifier import classify_db, calculate_attr_probs, calculate_class, calculate_probs
+from classifier import classify_db, calculate_class, calculate_probs
 # from classifier import genDataTable
 import os
 import process_data
@@ -9,7 +9,7 @@ from path_manager import pathManager as pm
 # print(separate_data(["q1","q2", "Classes"],dataset,"Classes"))
 # print(genDataTable(["q1","q2", "Classes"],dataset,"Classes"))
 
-
+# Prepare iris database for testing purposes
 full_path = "/Users/admin/Desktop/2019 Fall Semester/Machine Learning/CSCI-447-Project-1/databases/iris/iris.data"
 db = process_data.process_database_file(full_path)
 
