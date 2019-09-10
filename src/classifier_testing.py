@@ -1,4 +1,4 @@
-from classifier import separate_data, genDataTable, calculate_attr_probs, calculate_class
+from classifier import classify_db, calculate_attr_probs, calculate_class, calculate_probs
 # from classifier import genDataTable
 import os
 import process_data
@@ -17,27 +17,11 @@ normal_data, irregular_data = process_data.identify_missing_data(db.get_data())
 normal_data = normal_data[0:len(normal_data)-1] # last row is empty so the code wasn't running
 
 attrs = ["sepal length", "sepal width", "petal length", "petal width", "class"] 
-classified_data = separate_data(attrs, normal_data, "class")['class']
+# classified_data = separate_data(attrs, normal_data, "class")['class']
+classified_data = classify_db(attrs, normal_data, 4)
+calculate_probs(classified_data)
+print(classified_data)
 
-# This prints the separated data with clean formatting
-# for c in classified_data:
-#     print(c)
-#     for inst in classified_data[c]:
-#         print(inst)
-
-# print(len(classified_data['Iris-setosa']))
-
-data_table = genDataTable(attrs, normal_data, 'class')
-# This prints the data_table with clean formatting
-# for clss in data_table:
-#     print(clss)
-#     for inst in data_table[clss]:
-#         print(inst, ": ", data_table[clss][inst])
-
-prob_table = calculate_attr_probs(normal_data, attrs, 'class')
-calculate_class(normal_data[0], normal_data, classified_data, prob_table, attrs)
-# for c, probs in prob_table.items():
-#     print(c, ": ", probs)
 
 
 

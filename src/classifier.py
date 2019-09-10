@@ -65,17 +65,15 @@ def classify_db(attrs, db, class_idx):
 
             # If the current attribute isn't the "class" attribute or the class's count...
             if attr_idx != class_idx and row[attr_idx] != 'count':
-
                 # If the current attribute isn't already in
                 # the data_tbl for the current class...
                 if row[attr_idx] not in data_tbl[row[class_idx]][attrs[attr_idx]]:
-
                     # Make the current attribute a key for the current class
                     # and make that attribute's response count
-                    data_tbl[row[class_idx]][attrs[attr_idx]][row[attr_idx]] = 0
+                    data_tbl[row[class_idx]][attrs[attr_idx]][row[attr_idx]] = [0,0]
                 
                 # Increment the response count by 1
-                data_tbl[row[class_idx]][attrs[attr_idx]][row[attr_idx]] += 1
+                data_tbl[row[class_idx]][attrs[attr_idx]][row[attr_idx]][0] += 1
 
     # Return the completed data structure per the form in @return
     return data_tbl
@@ -97,11 +95,27 @@ def calc_prob_of_response(raw_data, classified_data):
     for data_class in classified_data:
         print(data_class)
 
+""" -------------------------------------------------------------
+Calculate probabilities for each attribute value
+@param data_tbl a data_table created by the classify_db() function
+"""
+def calculate_probs(data_tbl):
+    # Iterate over each class in data_tbl
+    for classifier, values in data_tbl.items():
+        for val in values:
+            if val != 'count':
+                # Loop thru each value count and calculate the probabilities
+                for count in data_tbl[classifier][val]:
+                    data_tbl[classifier][val][count][1] = data_tbl[classifier][val][count][0] / data_tbl[classifier]['count']
 
+"""-------------------------------------------------------------
+Old function to calculate attribute probabilities.
+Used the genDataTable function that we no longer have
+"""
 import copy
 def calculate_attr_probs(data, attributes, attr_to_classify):
-    classified_data = separate_data(attributes, data, attr_to_classify)['class']
-    data_table = genDataTable(attributes, data, attr_to_classify)
+    # classified_data = separate_data(attributes, data, attr_to_classify)['class']
+    data_table = classify_db(attributes, data, attr_to_classify)
     prob_table = copy.deepcopy(data_table)
     for classifier, count_list in prob_table.items():
         for val, val_counts in count_list.items():
