@@ -26,6 +26,8 @@ def process_database_file(input_db):
             
     current_db_file.close()
 
+    db_data.pop()
+
     return db(db_data)
 
 """ -------------------------------------------------------------
