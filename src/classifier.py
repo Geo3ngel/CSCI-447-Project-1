@@ -15,16 +15,23 @@
             (form illustrated in @return)
 FIXME: Commented out because nothing uses this (Dana)
 """
-# import collections
-# def separate_data(attributes, data, attr_to_classify):
-#     class_idx = attributes.index(attr_to_classify)
-#     data_classes = {attr_to_classify:{} }
-#     for row_idx in range(len(data)):
-#         example = data[row_idx]
-#         if example[class_idx] not in data_classes[attr_to_classify]:
-#             data_classes[attr_to_classify][example[class_idx]] = []
-#         data_classes[attr_to_classify][example[class_idx]].append(example)
-#     return data_classes
+
+def separate_data(attributes, data, attr_to_classify):
+     class_idx = attributes.index(attr_to_classify)
+     binSize = int(len(data)/10)
+     bin_lengths = []
+     row_idx = 0
+     return_data = []
+     for index in range(10):
+         bin_lengths.append(binSize)
+     for index in range((len(data)%10 )):
+         bin_lengths[index] += 1
+     for bin_idx in range(len(bin_lengths)):
+        for row in range(bin_lengths[bin_idx]):
+            example = data[row_idx]
+            return_data.append([bin_idx,*example])
+            row_idx += 1
+     return return_data
 
 """ -------------------------------------------------------------
 @reference  https://stackoverflow.com/questions/39272862/is-printing-defaultdict-supposed-to-be-ugly-non-human-readable-by-default
@@ -173,3 +180,20 @@ def calc_prob_of_response(db):
                 (class_count + len(db_class))
 
     return db
+
+def predict(probs, attr_for_prediction, attrs, data_to_predict):
+    probs_products = []
+    classes = []
+    attribute_indexes = []
+    for key in probs.keys():
+        probs_products.append(1)
+    for attribute in attr_for_prediction:
+        attribute_indexes.append(attrs.index(attribute))
+
+    for class_idx, data_class in enumerate(probs):
+        classes.append(data_class)
+        for attribute_idx in attribute_indexes:
+            if attribute_idx != 0:
+                probs_products[class_idx] *= probs[data_class][attrs[attribute_idx]][data_to_predict[attribute_idx]][1]
+    return classes[probs_products.index(max(probs_products))]
+
