@@ -173,3 +173,41 @@ def calc_prob_of_response(db):
                 (class_count + len(db_class))
 
     return db
+
+'''---------------------------------------------------------
+Add noise to the dataset by randomly selecting 10% of the examples
+and then shuffling the attribute values around
+@param db the database we are adding noise
+@param class_idx the the index of the class attribute
+@return a deep copy of the database with the noise added
+'''
+import copy
+import math
+import numpy as np
+def add_noise(db, class_idx):
+    noisey_db = copy.deepcopy(db)
+    # Get count of 10% of database
+    num_rows = math.floor(len(noisey_db.get_data()) * 0.1)
+    #Create list of random indices within db
+    indices = np.random.random_integers(0, len(noisey_db.get_data())-1, num_rows)
+    for idx in indices:
+        row = noisey_db.get_data()[idx]
+        print("ROW: ", row)
+        for i in range(len(row)): # Shuffle values in the current row
+            if i == class_idx: #Skip classifier attr.
+                continue
+            rand_idx = np.random.randint(0,len(row))
+            # Make sure we aren't swapping classifier attr. (kinda weird...)
+            while(rand_idx == class_idx):
+                rand_idx = np.random.randint(0,len(row))
+            # swap values
+            temp = row[rand_idx]
+            row[rand_idx] = row[i]
+            row[i] = temp
+        print ("SHUFFLED ROW: ", row)
+            
+
+                
+
+        
+
