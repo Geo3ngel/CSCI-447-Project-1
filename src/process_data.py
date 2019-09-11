@@ -64,7 +64,7 @@ def data_correction(input_db, attribute_count):
     return input_db, correction_queue
 
 # Finds any ambiguous/missing data and returns the rows of the relevant database in which missing parameters occur.
-def identify_missing_data(input_db):
+def identify_missing_data(input_db, missing_data_val):
     
     # Holds the rows of data that appear to be missing some attributes
     correction_queue = []
@@ -72,7 +72,7 @@ def identify_missing_data(input_db):
     for data in input_db:
         
         # Check for a missing parameter character:
-        if "?" in data:
+        if missing_data_val in data:
             # Adds data to que for correction
             correction_queue.append(data)
         else:
