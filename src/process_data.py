@@ -38,10 +38,10 @@ def process_database_file(path_manager):
         
 
     
-    attributes = read_attributes(path_manager.get_current_selected_dir(), data_filename)
+    attributes, classifier_column, classifier_attr_cols = read_attributes(path_manager.get_current_selected_dir(), data_filename)
 
     print(attributes)
-    return db(db_data, attributes)
+    return db(db_data, attributes, classifier_column, classifier_attr_cols)
 
 # Reads in the attribute file from a database, and returns the attributes as a list
 def read_attributes(directory, data_filename):
@@ -51,15 +51,18 @@ def read_attributes(directory, data_filename):
     
     attribute_file = open(full_path, 'r')
     
-    attributes = []
-    for attribute in attribute_file:
-        value = attribute.strip('\n')
-        if value is not "":
-            attributes.append(value)
-        
-    return attributes
-        
-        
+    # Reads in attributes from line 1 and split/cleans into list
+    attributes = attribute_file.readline().strip('\n').split(',')
+    
+    # Reads in the index of the Classifier column.
+    classifier_column = int(attribute_file.readline().strip('\n'))
+    
+    # Reads in the indexes of the attributes used for classification
+    classifier_attr_cols = []
+    for cols in  attribute_file.readline().strip('\n').split(','):
+        classifier_attr_cols.append(int(cols))
+    
+    return attributes, classifier_column, classifier_attr_cols
     
 """ -------------------------------------------------------------
 @param  input_csv   Comma-seperated string to convert
