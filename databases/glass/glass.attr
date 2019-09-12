@@ -1,11 +1,4 @@
-ID:
-RI: refractive index
-Na: Sodium
-Mg: Magnesium
-Al: Aluminum
-Si: Silicon
-K: Potassium
-Ca: Calcium
-Ba: Barium
-Fe: Iron
-Type of glass: (class attribute)
+ID:,RI: refractive index,Na: Sodium,Mg: Magnesium,Al: Aluminum,Si: Silicon,K: Potassium,Ca: Calcium,Ba: Barium,Fe: Iron,Type of glass:
+10
+5,8,1
+None
