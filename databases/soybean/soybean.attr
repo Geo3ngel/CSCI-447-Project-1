@@ -32,4 +32,4 @@ mold-growth:
 seed-discolor:
 seed-size:
 shriveling:
-roots:
+roots: (class attribute)
