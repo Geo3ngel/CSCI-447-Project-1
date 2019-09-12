@@ -29,6 +29,17 @@ class database:
     def get_attr(self):
         return self.attributes
     
+    def get_classifier_attribute_index(self):
+        index = 0
+        for attribute in self.attributes:
+            if "(class attribute)" in attribute:
+                print("HERE:", attribute)
+                return index
+            index+=1
+            
+        print("Error, class attribute not automatically located.")
+        return -1
+    
     # Shuffles X% of the data for an attribute specified by row of dataset.
     def shuffle_data(self, percent, attribute):
         
