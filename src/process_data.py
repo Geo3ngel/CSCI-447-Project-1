@@ -74,10 +74,10 @@ def csv_to_set(input_csv):
 def convert(database):
     if len(database) > 0:
         attribute_count = len(database[0])
-        for attribute_col in range(0, attribute_col):
+        for attribute_col in range(0, attribute_count):
             if needs_conversion(database, attribute_col):
                 # TODO: return if needed
-                convert_to_catagorical(database, attribute_col)
+                database = equal_width_conversion(database, attribute_col)
                 
 
 # Returns a boolean value representative of whether or not the column of values needs to be converted from quantitative to catagorial.
@@ -85,16 +85,62 @@ def needs_conversion(database, attribute_col):
     for data_row in database:
         # See if the value for each row of the column specified is a float/int
         try:
-            float(database[attribute_col])
+            float(data_row[attribute_col])
         except ValueError:
             print("Not a float")
             return False
     return True
 
 # Converts a column of quantitative data to catagorical values.
-def convert_to_catagorical(database, attribute_col):
+def equal_width_conversion(database, attribute_col):
+    
+    # TODO: Change bin count dynamically at some point?
+    bin_count = 3
+    
+    min = float(database[0][attribute_col])
+    max = float(database[0][attribute_col])
+    
+    # find the largest & smallest values
     for data_row in database:
-        pass
+        if float(data_row[attribute_col]) > max:
+            max = float(data_row[attribute_col])
+        elif float(data_row[attribute_col]) < min:
+            min = float(data_row[attribute_col])
+            
+    # Calculate binning width
+    width = (max - min)/bin_count
+
+    # TODO: Change these bins from arbitrary to dynamic
+    small_bin = []
+    medium_bin = []
+    large_bin = []
+    # Put stuff in bins
+    for data_row in database:
+        if min <= float(data_row[attribute_col]) < (min+width):
+            small_bin.append(data_row)
+        elif (min+width) <= float(data_row[attribute_col]) < (min+(2*width)):
+            medium_bin.append(data_row)
+        elif (min+(2*width)) <= float(data_row[attribute_col]) <= (max):
+            large_bin.append(data_row)
+            
+    # Overwrites small bin values
+    for data_row in small_bin:
+        data_row[attribute_col] = str(min)+"-"+str(min+width)
+    
+    for data_row in medium_bin:
+        data_row[attribute_col] = str(min+width)+"-"+str(min+(2*width))
+        
+    for data_row in large_bin:
+        data_row[attribute_col] = str(min+(2*width))+"-"+str(max)
+        
+    merged_bins = small_bin + medium_bin
+    merged_bins += large_bin
+    
+    return merged_bins
+        
+    
+    
+    
 
 """ -------------------------------------------------------------
 @param  database        Input database to operate upon per @brief
