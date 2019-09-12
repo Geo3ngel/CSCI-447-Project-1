@@ -52,14 +52,12 @@ path_manager.set_current_selected_folder(selected_database)
 # Processes the file path of the database into a pre processed database ready to be used as a learning/training set.
 db = process_data.process_database_file(path_manager)
 
-missing_data_val = input("\nEnter missing data value: ")
-
 print("ATTRIBU{TES:}", db.get_attr())
 print(db.get_classifier_attribute_index())
 # ### Sanity checks. TODO: move to a unit test case file.
-normal_data, irregular_data = process_data.identify_missing_data(db.get_data(), missing_data_val)
+normal_data, irregular_data = process_data.identify_missing_data(db)
 
-corrected_data = process_data.extrapolate_data(normal_data, irregular_data, missing_data_val)
+corrected_data = process_data.extrapolate_data(normal_data, irregular_data, db.get_missing_symbol())
 print("\nNormal Data:")
 print_database(normal_data)
 
