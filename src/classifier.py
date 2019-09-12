@@ -134,8 +134,19 @@ def classify_db(attrs, db, class_idx):
 def calculate_class(example, training_data_tbl, class_idx):
     print("Example: ", example)
     C = [] # Array to store probabilities of each class
+    Q = [] 
+    total_data = 0
+    # For each class in the training data
+    for c in training_data_tbl:
+        count = training_data_tbl[c]['count']
+        total_data += count
+        Q.append(count)
+    
+    Q = [x / total_data for x in Q]
+    
     # Iterate over each class in training data table
     for classifier in training_data_tbl:
+        print(training_data_tbl[classifier])
         prob = 1
         idx = 0
         # Iterate through values for each classifier
