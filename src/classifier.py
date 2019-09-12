@@ -125,42 +125,54 @@ def classify_db(attrs, db, class_idx):
 
 #     return prob_table
 
-
-# -------------------------------------------------------------
-# Guess the class of an example
-# @param example a row from the test set that we are trying to classify
-# @param training_data_tbl the training data
-# @param class_idx the index of the column that stores the class for each row in the data
-def calculate_class(example, training_data_tbl, class_idx):
-    print("Example: ", example)
-    C = [] # Array to store probabilities of each class
-    Q = [] 
-    total_data = 0
+'''--------------------------------------------------------------
+Calculate proportions/probabilities of each class within the data set
+@param data - The data Tree, with the class counts included
+@return a set containing the probabilities for each class
+'''
+def get_class_probs(data):
+    Q = [] # Set to store class probs
+    total_data = 0 # Will store the total size of the data set
     # For each class in the training data
-    for c in training_data_tbl:
-        count = training_data_tbl[c]['count']
+    for c in data:
+        count = data[c]['count']
         total_data += count
         Q.append(count)
     
     Q = [x / total_data for x in Q]
-    
+    return Q
+
+''' -------------------------------------------------------------
+Guess the class of an example
+@param  example a row from the test set that we are trying to classify
+@param  tbd     the training data table
+@param  class_idx   the index of the column that stores the class for each row in the data
+@return the predicted class
+'''
+import numpy as np
+def calculate_class(example, tbd, class_probs, class_idx):
+    # print("Example: ", example)
+    C = [] # Array to store probabilities of each class
+
     # Iterate over each class in training data table
-    for classifier in training_data_tbl:
-        print(training_data_tbl[classifier])
+    for classifier in tbd:
+        # print(tbd[classifier])
         prob = 1
         idx = 0
         # Iterate through values for each classifier
-        for attr in training_data_tbl[classifier]:
+        for attr in tbd[classifier]:
             if attr != 'count':
                 if idx != class_idx:
-                    if training_data_tbl[classifier][attr][example[idx]][1] != {}:
-                        prob *= training_data_tbl[classifier][attr][example[idx]][1]
+                    if tbd[classifier][attr][example[idx]][1] != {}:
+                        prob *= tbd[classifier][attr][example[idx]][1]
                     else:
                         prob *= 0
                 idx = idx + 1
         C.append(prob)
 
-    print(C)
+    C = [class_probs[i] * C[i] for i in range(len(C))]
+    return np.argmax(C)
+    
 
 """ -------------------------------------------------------------
 @param  db  The pre-processed data already classified by classify_db()
