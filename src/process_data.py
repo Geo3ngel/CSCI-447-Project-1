@@ -70,6 +70,32 @@ def read_attributes(directory, data_filename):
 def csv_to_set(input_csv):
     return input_csv.strip('\n').split(',')
 
+# Goes over the database and runs necessary conversions.
+def convert(database):
+    if len(database) > 0:
+        attribute_count = len(database[0])
+        for attribute_col in range(0, attribute_col):
+            if needs_conversion(database, attribute_col):
+                # TODO: return if needed
+                convert_to_catagorical(database, attribute_col)
+                
+
+# Returns a boolean value representative of whether or not the column of values needs to be converted from quantitative to catagorial.
+def needs_conversion(database, attribute_col):
+    for data_row in database:
+        # See if the value for each row of the column specified is a float/int
+        try:
+            float(database[attribute_col])
+        except ValueError:
+            print("Not a float")
+            return False
+    return True
+
+# Converts a column of quantitative data to catagorical values.
+def convert_to_catagorical(database, attribute_col):
+    for data_row in database:
+        pass
+
 """ -------------------------------------------------------------
 @param  database        Input database to operate upon per @brief
 @param  attribute_count The amount of expected attributes for each row of data.

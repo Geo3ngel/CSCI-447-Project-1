@@ -83,10 +83,10 @@ else:
     
 db.set_data(repaired_db)
 
-# db.shuffle_data(.1, 2)
+db.shuffle_data(.1, 2)
 
-# print("Shuffled data:")
-# print_database(db.get_data())
+print("Shuffled data:")
+print_database(db.get_data())
 # # -------------------------------------------------------------
 
 # print("\nRunning classifier...")
