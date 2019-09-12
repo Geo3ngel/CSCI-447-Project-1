@@ -93,7 +93,7 @@ def extrapolate_data(normal_data, malformed_data, missing_data_val):
     # If 'low' number of missing attributes: remove.
     # Else: Generate a random attribute from a pool of prexisting ones?
         # Set up a queue of lines that need to do this, so we have the pool already fully generated.
-            # TODO: DOCUMENT THIS CHOICE.
+            # TODO: DOCUMENT THIS CHOICE.*/
             
 # Fills in the unknown/missing data from existing normal data randomly.
 def bootstrap_selection(normal_data, malformed_row, missing_data_val):
