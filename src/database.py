@@ -12,9 +12,10 @@ class database:
     @param  data_array  List of data from one data repository
                         that will be or has been filtered.
     """
-    def __init__(self, data_array):
+    def __init__(self, data_array, attrs):
         print("Database initialized.")
         self.data = data_array
+        self.attributes = attrs
         
     def to_string(self):
         print(self.data)
@@ -24,6 +25,9 @@ class database:
     
     def set_data(self, data_array):
         self.data = data_array
+        
+    def get_attr(self):
+        return self.attributes
     
     # Shuffles X% of the data for an attribute specified by row of dataset.
     def shuffle_data(self, percent, attribute):

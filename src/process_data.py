@@ -6,6 +6,7 @@
 
 from database import database as db
 import random
+import os
 
 """ -------------------------------------------------------------
 @param  input_database  The database file (of type .data) to be processed
@@ -15,9 +16,13 @@ import random
 @brief      Loads the file contents into a database object
 """
 # FIXME: Change to use numpy for efficiency's sake?
-def process_database_file(input_db):
+def process_database_file(path_manager):
 
-    current_db_file = open(input_db, 'r')
+    # loads in data file from the selected database directory
+    data_filename = path_manager.find_files(path_manager.get_current_selected_dir(), ".data")[0]
+    full_data_path = os.path.join(path_manager.get_current_selected_dir(), data_filename)
+
+    current_db_file = open(full_data_path, 'r')
     db_data = []
 
     for line in current_db_file:
@@ -25,11 +30,37 @@ def process_database_file(input_db):
         db_data.append(csv_to_set(line))
             
     current_db_file.close()
+    
+    if len(db_data[-1]) < 0:
+        db_data.pop()
+    elif db_data[-1][0] is "" and len(db_data[-1]) is 1: 
+        db_data.pop()
+        
 
-    db_data.pop()
+    
+    attributes = read_attributes(path_manager.get_current_selected_dir(), data_filename)
 
-    return db(db_data)
+    print(attributes)
+    return db(db_data, attributes)
 
+# Reads in the attribute file from a database, and returns the attributes as a list
+def read_attributes(directory, data_filename):
+    attribute_file_name = data_filename[:-4] + "attr"
+    
+    full_path = os.path.join(directory, attribute_file_name)
+    
+    attribute_file = open(full_path, 'r')
+    
+    attributes = []
+    for attribute in attribute_file:
+        value = attribute.strip('\n')
+        if value is not "":
+            attributes.append(value)
+        
+    return attributes
+        
+        
+    
 """ -------------------------------------------------------------
 @param  input_csv   Comma-seperated string to convert
 
