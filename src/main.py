@@ -56,16 +56,14 @@ full_path = os.path.join(path_manager.get_current_selected_dir(), database_data)
 # Processes the file path of the database into a pre processed database ready to be used as a learning/training set.
 db = process_data.process_database_file(full_path)
 
-TEMP = db.get_data()
-
 missing_data_val = input("\nEnter missing data value: ")
 
 ### Sanity checks. TODO: move to a unit test case file.
 normal_data, irregular_data = process_data.identify_missing_data(db.get_data(), missing_data_val)
 
-corrected_data = process_data.extrapolate_data(normal_data, irregular_data)
-#print("\nNormal Data:")
-#print_database(normal_data)
+corrected_data = process_data.extrapolate_data(normal_data, irregular_data,missing_data_val)
+# print("\nNormal Data:")
+# print_database(normal_data)
 
 # -------------------------------------------------------------
 
