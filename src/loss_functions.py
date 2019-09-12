@@ -1,6 +1,6 @@
 import numpy as np
-# from classifier import classify_db, calculate_class, calc_prob_of_response, separate_data
 from classifier import *
+from k_fold_cross_validation import *
 import os
 import process_data
 from path_manager import pathManager as pm
@@ -48,16 +48,20 @@ classified_data = classify_db(attrs, normal_data, 4)
 class_probs = get_class_probs(classified_data)
 classified_data = calc_prob_of_response(classified_data)
 
-binified_data = separate_data(attrs, db.get_data(), 'class')
+# binified_data = separate_data(attrs, db.get_data(), 'class')
 classes = ['Iris-setosa', 'Iris-versicolor', 'Iris-verginica']
 
-for row in binified_data:
-    if row[0] == 9:
-        # Let's start guessing!
-        print("ROW: ", row)
-        idx = calculate_class(row, classified_data, class_probs, 5)
-        print("GUESSED CLASS: ", classes[idx])
-        print("------------------------------")
+
+k_fold(10, classifier.separate_data(attrs,db.get_data())[0],classifier.separate_data(attrs,db.get_data())[1])
+
+
+# for row in binified_data:
+#     if row[0] == 9:
+#         # Let's start guessing!
+#         print("ROW: ", row)
+#         idx = calculate_class(row, classified_data, class_probs, 5)
+#         print("GUESSED CLASS: ", classes[idx])
+#         print("------------------------------")
 
 
 
