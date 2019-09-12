@@ -71,3 +71,5 @@
     - [ ] run k (10) learning experiments 
     - [ ] Average test results from k learning experiments as our algorithms accuracy
     - [ ] return learning experiments test set & training set with the best accuracy.
+
+- [ ] Make the binning function not 10 (static) but k (generic)
