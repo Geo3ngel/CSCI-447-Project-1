@@ -38,10 +38,10 @@ def process_database_file(path_manager):
         
 
     
-    attributes, classifier_column, classifier_attr_cols = read_attributes(path_manager.get_current_selected_dir(), data_filename)
+    attributes, classifier_column, classifier_attr_cols, missing_symbol = read_attributes(path_manager.get_current_selected_dir(), data_filename)
 
     print(attributes)
-    return db(db_data, attributes, classifier_column, classifier_attr_cols)
+    return db(db_data, attributes, classifier_column, classifier_attr_cols, missing_symbol)
 
 # Reads in the attribute file from a database, and returns the attributes as a list
 def read_attributes(directory, data_filename):
@@ -61,8 +61,10 @@ def read_attributes(directory, data_filename):
     classifier_attr_cols = []
     for cols in  attribute_file.readline().strip('\n').split(','):
         classifier_attr_cols.append(int(cols))
+        
+    missing_symbol = attribute_file.readline().strip('\n')
     
-    return attributes, classifier_column, classifier_attr_cols
+    return attributes, classifier_column, classifier_attr_cols, missing_symbol
     
 """ -------------------------------------------------------------
 @param  input_csv   Comma-seperated string to convert
@@ -162,7 +164,7 @@ def data_correction(input_db, attribute_count):
     # Checks if the data from a specific row
     # has all of the required parameters.
     # If not, pops it from the list into a later processing queue.
-    for data in input_db:
+    for data in input_db.get_data():
         if len(data) is not attribute_count:
             correction_queue.append(data)
             input_db.remove(data)
@@ -170,15 +172,15 @@ def data_correction(input_db, attribute_count):
     return input_db, correction_queue
 
 # Finds any ambiguous/missing data and returns the rows of the relevant database in which missing parameters occur.
-def identify_missing_data(input_db, missing_data_val):
+def identify_missing_data(input_db):
     
     # Holds the rows of data that appear to be missing some attributes
     correction_queue = []
     normal = []
-    for data in input_db:
+    for data in input_db.get_data():
         
         # Check for a missing parameter character:
-        if missing_data_val in data:
+        if input_db.get_missing_symbol() in data:
             # Adds data to que for correction
             correction_queue.append(data)
         else:
