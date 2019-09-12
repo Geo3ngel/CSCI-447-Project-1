@@ -156,9 +156,11 @@ def calculate_class(example, tbd, class_probs, class_idx):
 
     # Iterate over each class in training data table
     for classifier in tbd:
-        # print(tbd[classifier])
         prob = 1
-        idx = 0
+        # idx stores the index of the current attribute of the example
+        # we are evaluating. set to 1, b/c first number in each example 
+        # is the bin number.
+        idx = 1
         # Iterate through values for each classifier
         for attr in tbd[classifier]:
             if attr != 'count':

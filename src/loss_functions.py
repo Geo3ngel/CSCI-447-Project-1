@@ -49,11 +49,15 @@ class_probs = get_class_probs(classified_data)
 classified_data = calc_prob_of_response(classified_data)
 
 binified_data = separate_data(attrs, db.get_data(), 'class')
+classes = ['Iris-setosa', 'Iris-versicolor', 'Iris-verginica']
 
 for row in binified_data:
-    if row[0] == 0:
+    if row[0] == 9:
         # Let's start guessing!
-        print("ACTUAL ROW:")
+        print("ROW: ", row)
+        idx = calculate_class(row, classified_data, class_probs, 5)
+        print("GUESSED CLASS: ", classes[idx])
+        print("------------------------------")
 
 
 
