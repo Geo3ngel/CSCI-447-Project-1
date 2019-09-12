@@ -52,14 +52,14 @@ def read_attributes(directory, data_filename):
     attribute_file = open(full_path, 'r')
     
     # Reads in attributes from line 1 and split/cleans into list
-    attributes = attribute_file.readline().strip('\n').split()
+    attributes = attribute_file.readline().strip('\n').split(',')
     
     # Reads in the index of the Classifier column.
     classifier_column = int(attribute_file.readline().strip('\n'))
     
     # Reads in the indexes of the attributes used for classification
     classifier_attr_cols = []
-    for cols in  attribute_file.readline().strip('\n').split():
+    for cols in  attribute_file.readline().strip('\n').split(','):
         classifier_attr_cols.append(int(cols))
     
     return attributes, classifier_column, classifier_attr_cols
