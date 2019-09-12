@@ -16,8 +16,7 @@
 FIXME: Commented out because nothing uses this (Dana)
 """
 
-def separate_data(attributes, data, attr_to_classify):
-     class_idx = attributes.index(attr_to_classify)
+def separate_data(attributes, data):
      binSize = int(len(data)/10)
      bin_lengths = []
      row_idx = 0
@@ -31,7 +30,7 @@ def separate_data(attributes, data, attr_to_classify):
             example = data[row_idx]
             return_data.append([bin_idx,*example])
             row_idx += 1
-     return return_data
+     return [return_data,bin_lengths]
 
 """ -------------------------------------------------------------
 @reference  https://stackoverflow.com/questions/39272862/is-printing-defaultdict-supposed-to-be-ugly-non-human-readable-by-default
