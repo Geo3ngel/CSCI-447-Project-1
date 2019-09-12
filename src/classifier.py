@@ -15,16 +15,23 @@
             (form illustrated in @return)
 FIXME: Commented out because nothing uses this (Dana)
 """
-# import collections
-# def separate_data(attributes, data, attr_to_classify):
-#     class_idx = attributes.index(attr_to_classify)
-#     data_classes = {attr_to_classify:{} }
-#     for row_idx in range(len(data)):
-#         example = data[row_idx]
-#         if example[class_idx] not in data_classes[attr_to_classify]:
-#             data_classes[attr_to_classify][example[class_idx]] = []
-#         data_classes[attr_to_classify][example[class_idx]].append(example)
-#     return data_classes
+
+def separate_data(attributes, data, attr_to_classify):
+     class_idx = attributes.index(attr_to_classify)
+     binSize = int(len(data)/10)
+     bin_lengths = []
+     row_idx = 0
+     return_data = []
+     for index in range(10):
+         bin_lengths.append(binSize)
+     for index in range((len(data)%10 )):
+         bin_lengths[index] += 1
+     for bin_idx in range(len(bin_lengths)):
+        for row in range(bin_lengths[bin_idx]):
+            example = data[row_idx]
+            return_data.append([bin_idx,*example])
+            row_idx += 1
+     return return_data
 
 """ -------------------------------------------------------------
 @reference  https://stackoverflow.com/questions/39272862/is-printing-defaultdict-supposed-to-be-ugly-non-human-readable-by-default
@@ -174,42 +181,19 @@ def calc_prob_of_response(db):
 
     return db
 
-'''---------------------------------------------------------
-Add noise to the dataset by randomly selecting 10% of the examples
-and then shuffling the attribute values around
-@param db the database we are adding noise to
-@param class_idx the the index of the class attribute
-@return a deep copy of the database with the noise added
-'''
-import copy
-import math
-import numpy as np
-def add_noise(db, class_idx):
-    noisey_db = copy.deepcopy(db)
-    # Get count of 10% of database
-    num_rows = math.floor(len(noisey_db.get_data()) * 0.1)
-    # Create list of random indices within db
-    indices = np.random.random_integers(0, len(noisey_db.get_data())-1, num_rows)
-    for idx in indices:
-        row = noisey_db.get_data()[idx]
-        print("ROW: ", row)
-        for i in range(len(row)): # Shuffle values in the current row
-            if i == class_idx: # Skip classifier attr.
-                continue
-            rand_idx = np.random.randint(0,len(row))
-            # Make sure we aren't swapping classifier attr.
-            while(rand_idx == class_idx):
-                rand_idx = np.random.randint(0,len(row))
-            # swap values
-            temp = row[rand_idx]
-            row[rand_idx] = row[i]
-            row[i] = temp
-        print ("SHUFFLED ROW: ", row)
-    
-    return noisey_db
-            
+def predict(probs, attr_for_prediction, attrs, data_to_predict):
+    probs_products = []
+    classes = []
+    attribute_indexes = []
+    for key in probs.keys():
+        probs_products.append(1)
+    for attribute in attr_for_prediction:
+        attribute_indexes.append(attrs.index(attribute))
 
-                
-
-        
+    for class_idx, data_class in enumerate(probs):
+        classes.append(data_class)
+        for attribute_idx in attribute_indexes:
+            if attribute_idx != 0:
+                probs_products[class_idx] *= probs[data_class][attrs[attribute_idx]][data_to_predict[attribute_idx]][1]
+    return classes[probs_products.index(max(probs_products))]
 
