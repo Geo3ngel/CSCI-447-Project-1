@@ -40,6 +40,15 @@ class database:
         print("Error, class attribute not automatically located.")
         return -1
     
+    
+    def shuffle_all(self, percent):
+        if len(self.data) > 0:
+            attribute_count = 0
+            for attribute in self.data[0]:
+                self.shuffle_data(percent, attribute_count)
+                attribute_count += 1
+        
+    
     # Shuffles X% of the data for an attribute specified by row of dataset.
     def shuffle_data(self, percent, attribute):
         

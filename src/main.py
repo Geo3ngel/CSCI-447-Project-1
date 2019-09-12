@@ -83,7 +83,7 @@ else:
     
 db.set_data(repaired_db)
 
-db.shuffle_data(.1, 2)
+db.shuffle_all(.1)
 
 print("Shuffled data:")
 print_database(db.get_data())
