@@ -81,11 +81,11 @@ def identify_missing_data(input_db, missing_data_val):
             
     return normal, correction_queue
 
-def extrapolate_data(normal_data, malformed_data):
+def extrapolate_data(normal_data, malformed_data, missing_data_val):
     corrected_data = []
     
     for data in malformed_data:
-        corrected_data.append(bootstrap_selection(normal_data, data))
+        corrected_data.append(bootstrap_selection(normal_data, data, missing_data_val))
         
     return corrected_data
     
@@ -93,10 +93,10 @@ def extrapolate_data(normal_data, malformed_data):
     # If 'low' number of missing attributes: remove.
     # Else: Generate a random attribute from a pool of prexisting ones?
         # Set up a queue of lines that need to do this, so we have the pool already fully generated.
-            # TODO: DOCUMENT THIS CHOICE.
+            # TODO: DOCUMENT THIS CHOICE.*/
             
 # Fills in the unknown/missing data from existing normal data randomly.
-def bootstrap_selection(normal_data, malformed_row):
+def bootstrap_selection(normal_data, malformed_row, missing_data_val):
     length = len(malformed_row)
     
     corrected_data = []

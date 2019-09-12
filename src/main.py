@@ -63,7 +63,7 @@ missing_data_val = input("\nEnter missing data value: ")
 ### Sanity checks. TODO: move to a unit test case file.
 normal_data, irregular_data = process_data.identify_missing_data(db.get_data(), missing_data_val)
 
-corrected_data = process_data.extrapolate_data(normal_data, irregular_data)
+corrected_data = process_data.extrapolate_data(normal_data, irregular_data,missing_data_val)
 #print("\nNormal Data:")
 #print_database(normal_data)
 
