@@ -12,9 +12,10 @@ class database:
     @param  data_array  List of data from one data repository
                         that will be or has been filtered.
     """
-    def __init__(self, data_array):
+    def __init__(self, data_array, attrs):
         print("Database initialized.")
         self.data = data_array
+        self.attributes = attrs
         
     def to_string(self):
         print(self.data)
@@ -24,6 +25,29 @@ class database:
     
     def set_data(self, data_array):
         self.data = data_array
+        
+    def get_attr(self):
+        return self.attributes
+    
+    def get_classifier_attribute_index(self):
+        index = 0
+        for attribute in self.attributes:
+            if "(class attribute)" in attribute:
+                print("HERE:", attribute)
+                return index
+            index+=1
+            
+        print("Error, class attribute not automatically located.")
+        return -1
+    
+    
+    def shuffle_all(self, percent):
+        if len(self.data) > 0:
+            attribute_count = 0
+            for attribute in self.data[0]:
+                self.shuffle_data(percent, attribute_count)
+                attribute_count += 1
+        
     
     # Shuffles X% of the data for an attribute specified by row of dataset.
     def shuffle_data(self, percent, attribute):

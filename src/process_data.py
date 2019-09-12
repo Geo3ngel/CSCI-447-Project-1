@@ -6,6 +6,7 @@
 
 from database import database as db
 import random
+import os
 
 """ -------------------------------------------------------------
 @param  input_database  The database file (of type .data) to be processed
@@ -15,9 +16,13 @@ import random
 @brief      Loads the file contents into a database object
 """
 # FIXME: Change to use numpy for efficiency's sake?
-def process_database_file(input_db):
+def process_database_file(path_manager):
 
-    current_db_file = open(input_db, 'r')
+    # loads in data file from the selected database directory
+    data_filename = path_manager.find_files(path_manager.get_current_selected_dir(), ".data")[0]
+    full_data_path = os.path.join(path_manager.get_current_selected_dir(), data_filename)
+
+    current_db_file = open(full_data_path, 'r')
     db_data = []
 
     for line in current_db_file:
@@ -25,11 +30,37 @@ def process_database_file(input_db):
         db_data.append(csv_to_set(line))
             
     current_db_file.close()
+    
+    if len(db_data[-1]) < 0:
+        db_data.pop()
+    elif db_data[-1][0] is "" and len(db_data[-1]) is 1: 
+        db_data.pop()
+        
 
-    db_data.pop()
+    
+    attributes = read_attributes(path_manager.get_current_selected_dir(), data_filename)
 
-    return db(db_data)
+    print(attributes)
+    return db(db_data, attributes)
 
+# Reads in the attribute file from a database, and returns the attributes as a list
+def read_attributes(directory, data_filename):
+    attribute_file_name = data_filename[:-4] + "attr"
+    
+    full_path = os.path.join(directory, attribute_file_name)
+    
+    attribute_file = open(full_path, 'r')
+    
+    attributes = []
+    for attribute in attribute_file:
+        value = attribute.strip('\n')
+        if value is not "":
+            attributes.append(value)
+        
+    return attributes
+        
+        
+    
 """ -------------------------------------------------------------
 @param  input_csv   Comma-seperated string to convert
 
@@ -38,6 +69,32 @@ def process_database_file(input_db):
 """
 def csv_to_set(input_csv):
     return input_csv.strip('\n').split(',')
+
+# Goes over the database and runs necessary conversions.
+def convert(database):
+    if len(database) > 0:
+        attribute_count = len(database[0])
+        for attribute_col in range(0, attribute_col):
+            if needs_conversion(database, attribute_col):
+                # TODO: return if needed
+                convert_to_catagorical(database, attribute_col)
+                
+
+# Returns a boolean value representative of whether or not the column of values needs to be converted from quantitative to catagorial.
+def needs_conversion(database, attribute_col):
+    for data_row in database:
+        # See if the value for each row of the column specified is a float/int
+        try:
+            float(database[attribute_col])
+        except ValueError:
+            print("Not a float")
+            return False
+    return True
+
+# Converts a column of quantitative data to catagorical values.
+def convert_to_catagorical(database, attribute_col):
+    for data_row in database:
+        pass
 
 """ -------------------------------------------------------------
 @param  database        Input database to operate upon per @brief
@@ -81,11 +138,11 @@ def identify_missing_data(input_db, missing_data_val):
             
     return normal, correction_queue
 
-def extrapolate_data(normal_data, malformed_data):
+def extrapolate_data(normal_data, malformed_data, missing_data_val):
     corrected_data = []
     
     for data in malformed_data:
-        corrected_data.append(bootstrap_selection(normal_data, data))
+        corrected_data.append(bootstrap_selection(normal_data, data, missing_data_val))
         
     return corrected_data
     
@@ -93,10 +150,10 @@ def extrapolate_data(normal_data, malformed_data):
     # If 'low' number of missing attributes: remove.
     # Else: Generate a random attribute from a pool of prexisting ones?
         # Set up a queue of lines that need to do this, so we have the pool already fully generated.
-            # TODO: DOCUMENT THIS CHOICE.
+            # TODO: DOCUMENT THIS CHOICE.*/
             
 # Fills in the unknown/missing data from existing normal data randomly.
-def bootstrap_selection(normal_data, malformed_row):
+def bootstrap_selection(normal_data, malformed_row, missing_data_val):
     length = len(malformed_row)
     
     corrected_data = []

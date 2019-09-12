@@ -21,7 +21,7 @@ def select_database(databases):
     # Selection loop for database
     while(not chosen):
         print("\nEnter one of the databases displayed:", databases)
-        database = "voting-records"
+        database = input("Entry: ")
         if database in databases:
             print("Selected:", database)
             chosen = True
@@ -48,24 +48,19 @@ selected_database = select_database(path_manager.find_folders(path_manager.get_d
 # Sets the selected database folder in the path manager for referencing via full path.
 path_manager.set_current_selected_folder(selected_database)
 
-# Finds the data file in that directory and stores the file name
-database_data = path_manager.find_files(path_manager.get_current_selected_dir(), ".data")[0]
-
-full_path = os.path.join(path_manager.get_current_selected_dir(), database_data)
-
 # Processes the file path of the database into a pre processed database ready to be used as a learning/training set.
-db = process_data.process_database_file(full_path)
-
-TEMP = db.get_data()
+db = process_data.process_database_file(path_manager)
 
 missing_data_val = input("\nEnter missing data value: ")
 
-### Sanity checks. TODO: move to a unit test case file.
+print("ATTRIBU{TES:}", db.get_attr())
+print(db.get_classifier_attribute_index())
+# ### Sanity checks. TODO: move to a unit test case file.
 normal_data, irregular_data = process_data.identify_missing_data(db.get_data(), missing_data_val)
 
-corrected_data = process_data.extrapolate_data(normal_data, irregular_data)
-#print("\nNormal Data:")
-#print_database(normal_data)
+corrected_data = process_data.extrapolate_data(normal_data, irregular_data, missing_data_val)
+print("\nNormal Data:")
+print_database(normal_data)
 
 # -------------------------------------------------------------
 
@@ -74,8 +69,8 @@ corrected_data = process_data.extrapolate_data(normal_data, irregular_data)
 
 # -------------------------------------------------------------
 
-print("\n\n\n\n\nCorrected Irregular Data:")
-print_database(corrected_data)
+# print("\n\n\n\n\nCorrected Irregular Data:")
+# print_database(corrected_data)
 #print("Irregular data total:", len(irregular_data))
 #print("Regular data total:", len(normal_data))
 #rint("Corrected data total:", len(corrected_data))
@@ -88,24 +83,24 @@ else:
     
 db.set_data(repaired_db)
 
-db.shuffle_data(.1, 2)
+db.shuffle_all(.1)
 
 print("Shuffled data:")
 print_database(db.get_data())
-# -------------------------------------------------------------
+# # -------------------------------------------------------------
 
-print("\nRunning classifier...")
-print('\n\n\n\n\nRunning classify_db():')
+# print("\nRunning classifier...")
+# print('\n\n\n\n\nRunning classify_db():')
 
-temp_attr_headers = ['pol','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16','a17']
-classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
+# temp_attr_headers = ['pol','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16','a17']
+# classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
 
-print(classified_data)
+# print(classified_data)
 
-print("\n\nRunning calc_prob_of_response():")
-probs = classifier.calc_prob_of_response(classified_data)
-print('\n\nprobs:\n')
-print(probs)
-print('\n\nprobs Products:\n')
-print(classifier.predict(probs,['a2'],temp_attr_headers,repaired_db[0]))
-print("\nFinished.")
+# print("\n\nRunning calc_prob_of_response():")
+# probs = classifier.calc_prob_of_response(classified_data)
+# print('\n\nprobs:\n')
+# print(probs)
+# print('\n\nprobs Products:\n')
+# print(classifier.predict(probs,['a2'],temp_attr_headers,repaired_db[0]))
+# print("\nFinished.")
