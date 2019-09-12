@@ -21,7 +21,7 @@ def select_database(databases):
     # Selection loop for database
     while(not chosen):
         print("\nEnter one of the databases displayed:", databases)
-        database = input("Database: ")
+        database = "voting-records"
         if database in databases:
             print("Selected:", database)
             chosen = True
@@ -64,21 +64,21 @@ missing_data_val = input("\nEnter missing data value: ")
 normal_data, irregular_data = process_data.identify_missing_data(db.get_data(), missing_data_val)
 
 corrected_data = process_data.extrapolate_data(normal_data, irregular_data)
-# print("\nNormal Data:")
-# print_database(normal_data)
+#print("\nNormal Data:")
+#print_database(normal_data)
 
 # -------------------------------------------------------------
 
-print("\n\n\n\n\nIrregular Data:")
-print_database(irregular_data)
+#print("\n\n\n\n\nIrregular Data:")
+#print_database(irregular_data)
 
 # -------------------------------------------------------------
 
 print("\n\n\n\n\nCorrected Irregular Data:")
 print_database(corrected_data)
-print("Irregular data total:", len(irregular_data))
-print("Regular data total:", len(normal_data))
-print("Corrected data total:", len(corrected_data))
+#print("Irregular data total:", len(irregular_data))
+#print("Regular data total:", len(normal_data))
+#rint("Corrected data total:", len(corrected_data))
 
 # repaired_db is the total database once the missing values have been filled in.
 if len(corrected_data) > 0:
@@ -106,5 +106,6 @@ print("\n\nRunning calc_prob_of_response():")
 probs = classifier.calc_prob_of_response(classified_data)
 print('\n\nprobs:\n')
 print(probs)
-
+print('\n\nprobs Products:\n')
+print(classifier.predict(probs,['a2'],temp_attr_headers,repaired_db[0]))
 print("\nFinished.")
