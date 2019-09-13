@@ -82,18 +82,33 @@ Our hypotheses for each data set are as follows: \\ \\
 Per the instructions of the assignment, we implemented the naive Bayes algorithm on the 5 provided data sets. Given some example $x \in X$, where $X$ is our data set, naive Bayes predicts the correct class $c$ of $x$ by computing the probabilities of each possible classification for $x$. For class $c$, the probability is denoted as $P(c | a_1, a_2,...,a_d)$ where $a_k$ denotes one of $d$ attribute values in $x$. To compute this probability for each class $c$, the probabilities of each attribute value are computed. For each attribute value $a_k$, we compute $P(c) * \prod^d_{i=0} P(a_i | c)$, where $P(c)$ is the probability of an attribute being classified as class $c$. To predict the correct class for $x$ we compute $\underset{c \in C}{\mathrm{argmax}}$ $P(c) * \prod^d_{i=0} P(a_i | c)$.
 
 \section{Our Approach}
-% Preprocessing
+\subsection{Handling missing data}
+ We opted to not remove data with missing values that occurs in low quantities, as given the already-small size of the data sets we are working with for this assignment, we thought it best to retain as much data as possible for training purposes.
 
+Rather, we decided to handle missing attribute values by replacing them with attributes selected randomly from a bootstrap distribution generated from all other data points in the database of the same attribute type that do not contain missing values. 
 
-% Separating and classifying data
-To properly implement naive Bayes [3] on the 5 data sets, we first needed to properly separate and classify each data set. Each data set needed to be separated by class, and then the count and probability of each attribute value for each class needed to be computed. Our approach for this was to create, for each dataset, an associative array, where each possible classifier was a key. For each key, the corresponding values were each their own associative arrays, the keys of which were all the extant attribute values among that class. The value of each key in these inner arrays was a set storing the count and conditional probability of each attribute value given the respective class. \\ \\
-% Shuffling(?)
+It is also worth noting that we do not hard code the symbol used for checking for missing values, but rather the missing value symbol is determined in the configuration '.attr' file that is unique for each database. It was handled in this manner due to inconsistencies between data sets with respect to symbols representing missing data.
+
+\subsection{Handling information about Attributes}
+Due to the fact that the databases had some uniqueness about them, rather than changing them directly to fit a generic format, we found it best to add a short and sweet configuration file for each database that would determine certain values when running our code. This way, we can both easily customize our parameters, and not have to rely on something primitive like command line user input. 
+
+The configuration file being referred to is the '.attr' file that exists in the directory of each database. it is required that the respective attribute configuration file ('.attr' file) has the same prefix as the '.data' file for the database in order to function, as our code base looks for the '.data' file in the database directory specified, and then uses the prefix of the file name when locating the attribute file. 
+
+The attribute file contains things like the column headers, column index of the attribute we want to classify, a list of indexes of the parameters used for classification, and finally, the last line is what will be used as the 'missing symbol', which is referenced in section (4.1). When running the program, these values are loaded in after the user selects a database from the list presented, and used accordingly.
+
+\subsection{Shuffling/Applying Noise}
 We implemented our prediction algorithm on the original version of each data set, and also introduced noise to each data set by randomly selecting 10\% of each data set and the shuffling attribute values. We then ran our algorithm on these shuffled versions of each data set.
-%K-Fold Cross Validation
+
+\subsection{Separating and classifying data}
+To properly implement naive Bayes [3] on the 5 data sets, we first needed to properly separate and classify each data set. Each data set needed to be separated by class, and then the count and probability of each attribute value for each class needed to be computed. Our approach for this was to create, for each dataset, an associative array, where each possible classifier was a key. For each key, the corresponding values were each their own associative arrays, the keys of which were all the extant attribute values among that class. The value of each key in these inner arrays was a set storing the count and conditional probability of each attribute value given the respective class. \\ \\
+
+\subsection{K-Fold Cross Validation}
 We tested our algorithm's implementation using 10-fold cross-validation. This validation model separates each data set into 10 subsets, or "bins", of equal size. It then runs 10 iterations. During each iteration, one bin is designated as the test data, being the data we will test our prediction algorithm on. The other 9 bins are designated as training data. It is on this training data subset that we will execute our learning algorithm, from which we will base our predictions. After first running the training algorithm on these 9 bins, we then predict the classifications of each example in the designated test data. For each iteration, a different bin is designated as test data, while the other 9 are designated as the training data. \\ \\
-% Loss functions
+
+\subsection{Loss functions}
 To assess the performance of our class prediction algorithm, we implemented two loss functions: Precision/Recall, and 0-1 Loss. We ran both loss functions on each iteration of the 10-fold cross-validation process, and then took averages of the values returned during from each iteration and used these values to measure the performance of our prediction algorithm. 0-1 Loss simply computes the fraction of the data our algorithm correctly classified. For each correctly classified data example, a 0 is returned, and for every incorrectly classified value, a 1 is returned. Accuracy is then defined as the percentage of 0's returned [2].\\ \\
-% Loss function 1: Precision Recall
+
+\subsection{Loss function 1: Precision Recall}
 The Precision/Recall loss function computes two values, known as precision and recall, to measure the performance of our class prediction algorithm. This loss function utilizes the amounts of true positive, false positive, and false negative classifications for each class. Precision and recall are are computed as follows: 
 $$Precision = \frac{1}{|C|} \sum^{|C|}_{i=1} \frac{TP_i}{TP_i + FP_i}$$
 $$Recall = \frac{1}{|C|} \sum^{|C|}_{i=1} \frac{TP_i}{TP_i + FN_i}$$
@@ -118,6 +133,8 @@ $TP_i$ denotes the number of true positive classifications for class $i$, $FP_i$
         \caption{Average Recall for \emph{Iris} (over 1,000 iterations)}
     \end{minipage}
 \end{figure}
+
+The graphs shown are of the normal distribution of the values obtains from our loss functions for the iris data set, with 10\% noise applied. 
 
 To construct these graphs, we ran 1,000 iterations of 10-fold cross-validation and found the average for the 0-1 Loss, precision, and recall against the Iris database. For the graph relating to Iris' recall over 1,000 iterations of 10-fold cross-validation, we are 95\% confident that the true recall for our naive Bayes algorithm's ability to classify test data is between 0.359 and 0.386 via a 95\% confidence interval. Regarding 0-1 Loss (the proportion of correct guesses by the naive Bayes algorithm), we are 95\% confident that the true 0-1 Loss for our naive Bayes algorithm's ability to classify test data is between 0.884 and 0.956 via a 95\% confidence interval. Finally, regarding precision, we are 95\% confident that the true precision for our naive Bayes algorithm's ability to classify test data is between 0.394 and 0.405 via a 95\% confidence interval.
 
