@@ -56,7 +56,6 @@
 \maketitle
 
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
-
 In this assignment, we implemented the naive Bayes prediction model on 5 data sets. We utilized 10-fold cross-validation to test our implementation and measured accuracy with two loss functions: 0-1 loss, and Precision/Recall.
 
 \end{abstract}
@@ -74,7 +73,7 @@ Given a data set of which all the correct classifications are known, we can impl
 % Hypotheses
 Our hypotheses for each data set are as follows: \\ \\
 \textit{Breast Cancer Wisconsin:} This data set is comprised of 9 quantitative variables, and each data example can be classified as either benign or malignant. We hypothesized that, given that there are only two possible classifications, that we will achieve no less than 85\% accuracy (i.e. a 0-1 loss score of 0.75) on our unshuffled data. We think that the shuffled breast cancer data will be no more than 3\% less accurate. \\ \\
-\textit{Glass:} This data set is comprised of 7 quantitative variables, and each data example can be classified as one of 7 possible glass types: building\_windows\_float\_processed, building\_windows\_non\_float\_processed, vehicle\_windows\_float\_processed, vehicle\_windows\_non\_float\_processed, containers, tableware, or headlamps. We hypothesize that we will achieve no less that 65\% accuracy (0-1 loss of 0.65) for the unshuffled data, given that there are 7 potential classes. The shuffled data, we predict, will be no more than 5\% less accurate than the shuffled data.\\ \\
+\textit{Glass:} This data set is comprised of 7 quantitative variables, and each data example can be classified as one of 7 possible glass types: building\_windows\_float\_processed, building\_windows\_non-float\_processed, vehicle\_windows\_float\_processed, vehicle\_windows non float processed, containers, tableware, or headlamps. We hypothesize that we will achieve no less that 65\% accuracy (0-1 loss of 0.65) for the unshuffled data, given that there are 7 potential classes. The shuffled data, we predict, will be no more than 5\% less accurate than the shuffled data.\\ \\
 \textit{Iris:} This dataset is comprised of 4 quantitative variables. Each data example can be classified as one of three different flower types. We are predicting approximately 75\% (0-1 loss of 0.75) accuracy. \\ \\
 \textit{Soybean:} This dataset is comprised of 35 attributes, and each data example can be classified as one of four different classifiers. We hypothesize 70\% accuracy (0-1 loss of 0.7) for this unshuffled data. For the shuffled data we are predicting the accuracy to be approximately 3\% less accurate.\\ \\
 \textit{Voting Records:} This data set is comprised 16 categorical attributes, and each example may be classified as either republican or democrat. We are hypothesizing approximately 85\% accuracy (0-1 loss of 0.85) for this dataset. We are predicting that the shuffled voting-record data should no more than 3\% less accurate than the shuffled data.\\
@@ -89,6 +88,7 @@ Per the instructions of the assignment, we implemented the naive Bayes algorithm
 % Separating and classifying data
 To properly implement naive Bayes on the 5 data sets, we first needed to properly separate and classify each data set. Each data set needed to be separated by class, and then the count and probability of each attribute value for each class needed to be computed. Our approach for this was to create, for each dataset, an associative array, where each possible classifier was a key. For each key, the corresponding values were each their own associative arrays, the keys of which were all the extant attribute values among that class. The value of each key in these inner arrays was a set storing the count and conditional probability of each attribute value given the respective class. \\ \\
 % Shuffling(?)
+We implemented our prediction algorithm on the original version of each data set, and also introduced noise to each data set by randomly selecting 10\% of each data set and the shuffling attribute values. We then ran our algorithm on these shuffled versions of each data set.
 %K-Fold Cross Validation
 We tested our algorithm's implementation using 10-fold cross-validation. This validation model separates each data set into 10 subsets, or "bins", of equal size. It then runs 10 iterations. During each iteration, one bin is designated as the test data, being the data we will test our prediction algorithm on. The other 9 bins are designated as training data. It is on this training data subset that we will execute our learning algorithm, from which we will base our predictions. After first running the training algorithm on these 9 bins, we then predict the classifications of each example in the designated test data. For each iteration, a different bin is designated as test data, while the other 9 are designated as the training data. \\ \\
 % Loss functions
