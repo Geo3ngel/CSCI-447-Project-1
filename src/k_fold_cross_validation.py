@@ -65,7 +65,7 @@ def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
         recall_values.append(recall_non_binary([incorrect_guesses, correct_guesses], class_list))
         precision_values.append(precision_non_binary([incorrect_guesses,correct_guesses], class_list))
         percent_correct_bins.append(len(correct_guesses)/(len(incorrect_guesses)+len(correct_guesses)))
-    
+        
     print("PRECISION: ", sum(precision_values) / len(precision_values))
     print("RECALL: ", sum(recall_values) / len(recall_values))
     return sum(percent_correct_bins)/len(percent_correct_bins)
