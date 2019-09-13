@@ -80,7 +80,7 @@ def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
         
     print("PRECISION: ", sum(precision_values) / len(precision_values))
     print("RECALL: ", sum(recall_values) / len(recall_values))
-    return sum(percent_correct_bins)/len(percent_correct_bins)
+    return [sum(percent_correct_bins)/len(percent_correct_bins), training_probs]
     
         
     #print(" \n \n \n Binned Guess Results\n \n \n")
