@@ -12,7 +12,6 @@
 
 \usepackage{jmlr2e}
 \usepackage{amsmath}
-
 % Definitions of handy macros can go here
 
 \newcommand{\dataset}{{\cal D}}
@@ -102,7 +101,22 @@ $TP_i$ denotes the number of true positive classifications for class $i$, $FP_i$
 
 
 \section{Results}
-
+\begin{figure}[!hbp] % Credit to stack exchange user Masroor and user Stefan Kottwitz for the implementation of side by side figures in LaTeX
+    \centering
+    \begin{minipage}[b]{0.7\textwidth}
+      \includegraphics[width=\textwidth]{01_loss_graph.png}
+      \caption{0/1 Loss}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.4\textwidth}
+      \includegraphics[width=\textwidth]{precision_graph.png}
+      \caption{Precision}
+    \end{minipage}
+    \begin{minipage}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{recall_graph.png}
+        \caption{Recall}
+    \end{minipage}
+\end{figure}
 % Acknowledgements should go at the end, before appendices and references
 
 \acks{1. Davis, Jesse, and Mark Goadrich. "The Relationship between Precision-Recall and ROC Curves." Proceedings of the 23rd International Conference on Machine Learning - ICML 06, 2006, doi:10.1145/1143844.1143874. \\ \\
