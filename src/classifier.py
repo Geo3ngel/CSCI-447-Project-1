@@ -189,17 +189,22 @@ def calc_prob_of_response(db):
 @param  data_to_predict     Our test data subset
 @param  db                  Our training data subset
 """
+# This method predicts the class of the sample that it is given
 def predict(probs, attrs, data_to_predict, db):
     attribute_indexes = db.get_classifier_attr_cols()
     probs_products = []
     classes = []
+    #This appends 1 to the probabilites so that we can use *= later
     for key in probs.keys():
         probs_products.append(1)
-    
+    #For each key in the probability dictionary, this whole loop structure traverses the dictionary of probabilities
     for class_idx, data_class in enumerate(probs):
         classes.append(data_class)
+        #For each index in the list of indexes for the attributes
         for attribute_idx in attribute_indexes:
+            #This prevents us from calculating probabilities based on the class we are trying to predict
             if attribute_idx != db.get_classifier_col():
+                # This prevents errors when there are 0 instances where an attribute has a certain value
                 if probs[data_class][attrs[attribute_idx]][data_to_predict[attribute_idx]][1] != {}:
                     probs_products[class_idx] *= probs[data_class][attrs[attribute_idx]][data_to_predict[attribute_idx]][1]
                 else:
