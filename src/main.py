@@ -3,6 +3,7 @@
 @authors     George Engel, Troy Oster, Dana Parker, Henry Soule
 @brief       The file that runs the program
 """
+
 import os
 import process_data
 import classifier
@@ -52,25 +53,10 @@ path_manager.set_current_selected_folder(selected_database)
 # Processes the file path of the database into a pre processed database ready to be used as a learning/training set.
 db = process_data.process_database_file(path_manager)
 
-# ### Sanity checks. TODO: move to a unit test case file.
+# Sanity checks.
 normal_data, irregular_data = process_data.identify_missing_data(db)
 
 corrected_data = process_data.extrapolate_data(normal_data, irregular_data, db.get_missing_symbol())
-# print("\nNormal Data:")
-# print_database(normal_data)
-
-# -------------------------------------------------------------
-
-#print("\n\n\n\n\nIrregular Data:")
-#print_database(irregular_data)
-
-# -------------------------------------------------------------
-
-# print("\n\n\n\n\nCorrected Irregular Data:")
-# print_database(corrected_data)
-#print("Irregular data total:", len(irregular_data))
-#print("Regular data total:", len(normal_data))
-#rint("Corrected data total:", len(corrected_data))
 
 # repaired_db is the total database once the missing values have been filled in.
 if len(corrected_data) > 0:
@@ -82,13 +68,6 @@ db.set_data(repaired_db)
 
 process_data.convert(db.get_data())
 
-#print("\n\n\nFINAL DATABASE:\n\n\n")
-#print_database(db.get_data())
-# # -------------------------------------------------------------
-
-# print("\nRunning classifier...")
-# print('\n\n\n\n\nRunning classify_db():')
-
 binned_data = classifier.separate_data(db.get_attr(),db.get_data())
 print('\n \n Pre-shuffle')
 print('---------------------')
@@ -99,14 +78,4 @@ print('---------------------')
 post_shuffle = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, True)
 print("0/1 Loss: ", post_shuffle)
 
-# classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
-
-# print(classified_data)
-
-# print("\n\nRunning calc_prob_of_response():")
-# probs = classifier.calc_prob_of_response(classified_data)
-# print('\n\nprobs:\n')
-# print(probs)
-# print('\n\nprobs Products:\n')
-# print(classifier.predict(probs,['a2'],temp_attr_headers,repaired_db[0]))
 print("\nFinished.")

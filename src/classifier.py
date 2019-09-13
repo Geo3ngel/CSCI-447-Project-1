@@ -84,42 +84,11 @@ def classify_db(attrs, db, class_idx):
     # Return the completed data structure per the form in @return
     return data_tbl
 
-# """ -------------------------------------------------------------
-# Calculate probabilities for each attribute value
-# This is step 2 in the algorithm
-# @param data_tbl a data_table created by the classify_db() function
-# """
-# def calculate_probs(data_tbl):
-    # Iterate over each class in data_tbl
-    # for classifier, values in data_tbl.items():
-    #     for val in values:
-    #         if val != 'count':
-    #             # Loop thru each value count and calculate the probabilities
-    #             for count in data_tbl[classifier][val]:
-    #                 data_tbl[classifier][val][count][1] = data_tbl[classifier][val][count][0] / data_tbl[classifier]['count']
-
-
-# -------------------------------------------------------------
-# Old function to calculate attribute probabilities.
-# Used the genDataTable function that we no longer have
-# 
-# import copy
-# def calculate_attr_probs(data, attributes, attr_to_classify):
-#     # classified_data = separate_data(attributes, data, attr_to_classify)['class']
-#     data_table = classify_db(attributes, data, attr_to_classify)
-#     prob_table = copy.deepcopy(data_table)
-#     for classifier, count_list in prob_table.items():
-#         for val, val_counts in count_list.items():
-#             for val, count in val_counts.items():
-#                 prob = (count + 1) / (len(classified_data[classifier]) + len(attributes))
-#                 val_counts[val] = prob
-
-#     return prob_table
-
 '''--------------------------------------------------------------
-Calculate proportions/probabilities of each class within the data set
-@param data - The data Tree, with the class counts included
-@return a set containing the probabilities for each class
+@param     data    The data Tree, with the class counts included
+
+@return     A set containing the probabilities for each class
+@brief      Calculate proportions/probabilities of each class within the data set
 '''
 def get_class_probs(data):
     Q = [] # Set to store class probs
@@ -133,39 +102,38 @@ def get_class_probs(data):
     Q = [x / total_data for x in Q]
     return Q
 
-''' -------------------------------------------------------------
-Guess the class of an example
-@param  example a row from the test set that we are trying to classify
-@param  tbd     the training data table
-@param  class_idx   the index of the column that stores the class for each row in the data
-@return the predicted class
-'''
-import numpy as np
-def calculate_class(example, tbd, class_probs, class_idx):
-    # print("Example: ", example)
-    C = [] # Array to store probabilities of each class
+# ''' -------------------------------------------------------------
+# @param  example     a row from the test set that we are trying to classify
+# @param  tbd         the training data table
+# @param  class_idx   the index of the column that stores the class for each row in the data
 
-    # Iterate over each class in training data table
-    for classifier in tbd:
-        prob = 1
-        # idx stores the index of the current attribute of the example
-        # we are evaluating. set to 1, b/c first number in each example 
-        # is the bin number.
-        idx = 1
-        # Iterate through values for each classifier
-        for attr in tbd[classifier]:
-            if attr != 'count':
-                if idx != class_idx:
-                    if tbd[classifier][attr][example[idx]][1] != {}:
-                        prob *= tbd[classifier][attr][example[idx]][1]
-                    else:
-                        prob *= 0
-                idx = idx + 1
-        C.append(prob)
+# @return the predicted class
+# '''
+# import numpy as np
+# def calculate_class(example, tbd, class_probs, class_idx):
+#     # print("Example: ", example)
+#     C = [] # Array to store probabilities of each class
 
-    C = [class_probs[i] * C[i] for i in range(len(C))]
-    return np.argmax(C)
-    
+#     # Iterate over each class in training data table
+#     for classifier in tbd:
+#         prob = 1
+#         # idx stores the index of the current attribute of the example
+#         # we are evaluating. set to 1, b/c first number in each example 
+#         # is the bin number.
+#         idx = 1
+#         # Iterate through values for each classifier
+#         for attr in tbd[classifier]:
+#             if attr != 'count':
+#                 if idx != class_idx:
+#                     if tbd[classifier][attr][example[idx]][1] != {}:
+#                         prob *= tbd[classifier][attr][example[idx]][1]
+#                     else:
+#                         prob *= 0
+#                 idx = idx + 1
+#         C.append(prob)
+
+#     C = [class_probs[i] * C[i] for i in range(len(C))]
+#     return np.argmax(C)
 
 """ -------------------------------------------------------------
 @param  db  The pre-processed data already classified by classify_db()
@@ -214,6 +182,13 @@ def calc_prob_of_response(db):
     
     return db
 
+""" -------------------------------------------------------------
+@param  probs               Our data structure containing conditional probabilities
+                            of attributes per class (dictionary)
+@param  attrs               A list of the names of the attributes in @param data_to_predict
+@param  data_to_predict     Our test data subset
+@param  db                  Our training data subset
+"""
 def predict(probs, attrs, data_to_predict, db):
     attribute_indexes = db.get_classifier_attr_cols()
     probs_products = []

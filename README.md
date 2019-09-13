@@ -10,15 +10,4 @@
 
 - Then open the environment using the command `conda activate bayes`
 
-- In the same command line, run `python Driver.py` to start the program.
-
-## Sources to cite:
-- Must be academically based (No one off articles)
-- Must site algorithms
-- Keep a consistant format for the sake of sanity. I beg you, theres not much left.
-
-- O. L. Mangasarian and W. H. Wolberg: "Cancer diagnosis via linear 
-      programming", SIAM News, Volume 23, Number 5, September 1990, pp 1 & 18.
-
-Acknowledgements:
-- University of Wisconsin Hospitals, Madison from Dr. William H. Wolberg.
+- In the same command line, run `python3 main.py` to start the program.

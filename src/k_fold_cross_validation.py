@@ -1,3 +1,9 @@
+""" -------------------------------------------------------------
+@file        k_fold_cross_validation.py
+@authors     George Engel, Troy Oster, Dana Parker, Henry Soule
+@brief       Contains all functionality related to k-fold cross-validation
+"""
+
 import classifier
 from copy import deepcopy
 from loss_functions import *
@@ -11,9 +17,15 @@ import process_data
 @return    binned_guess_results: [[<incorrect_guesses>, <correct_guesses>]]
                 incorrect_guesses: [[expected answer,incorrect guess]]
                 correct_guesses: [correct guess] 
-@brief     Given a number of folds k, and binned data, as well as bin_lengths, iterate over each bin and separate the data into two subsets, training_data and test_data. 
-           Then classify the training data and calculate the probabilities. Run prediction on each row of the test_data set and return an array of guess results containing guess results
-           associated with each bin, as every bin will be the test bin at some point.
+
+@brief     Given a number of folds k, and binned data, as well as bin_lengths,
+           iterate over each bin and separate the data into two subsets, 
+           training data and test_data. 
+           Then classify the training data and calculate the probabilities.
+           Run prediction on each row of the test_data set and return
+           an array of guess results containing
+           guess results associated with each bin,
+           as every bin will be the test bin at some point.
 """
 def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
     #print (binned_data_set)
