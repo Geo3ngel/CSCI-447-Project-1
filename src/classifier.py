@@ -84,14 +84,6 @@ def classify_db(attrs, db, class_idx):
     # Return the completed data structure per the form in @return
     return data_tbl
 
-# -----------
-# def calc_prob_of_response(raw_data, classified_data):
-
-#     ratios = {}
-
-#     for data_class in classified_data:
-#         print(data_class)
-
 # """ -------------------------------------------------------------
 # Calculate probabilities for each attribute value
 # This is step 2 in the algorithm
@@ -157,27 +149,44 @@ def calculate_class(example, training_data_tbl, class_idx):
             occuring in each class
 @brief      Converts each attribute value/response count into a probability
             of that value occuring within its class.
+            
             IMPORTANT: This is step 3 of "the algorithm"
 """
 def calc_prob_of_response(db):
 
+    # The total number of examples in a database
+    sample_size = 0
+
     # For each class in the database...
     for db_class in db:
+        for key, attr in list(db[db_class].items()):
 
-        # Acquire the total number of classes
-        # and remove that value from the local db variable
-        class_count = db[db_class].pop('count')
-        
-        # For each attribute within the class...
-        # "Divide the number of examples that match that attribute value (plus one)..."
-        # "...by the number of examples in the class (plus d) (d being number of attributes)"
-        for attr in db[db_class]:
+            # This formula doesn't apply to the count probability
+            if key != 'count':
 
-            for key in db[db_class][attr].keys():
-                db[db_class][attr][key][1] = \
-                (db[db_class][attr][key][0] + 1) / \
-                (class_count + len(db_class))
+                # For each attribute within the class...
+                # "Divide the number of examples that match that attribute value (plus one)..."
+                # "...by the number of examples in the class (plus d) (d being number of attributes)"
+                for val in attr:
+                    db[db_class][key][val][1] = \
+                    (db[db_class][key][val][0] + 1) / \
+                    (db[db_class]['count'] + len(db_class))
 
+            # If we are looking at the count attribute,
+            # add it to a generic total
+            elif key == 'count':
+                sample_size += db[db_class][key]
+    
+    # We need to re-loop through each class to get
+    # each classes probability
+    for db_class in db:
+
+        # Probability of a class is it's count divided by the sample size
+        temp = []
+        temp.append(db[db_class]['count'] )
+        temp.append(temp[0] / sample_size)
+        db[db_class]['count'] = temp
+    
     return db
 
 def predict(probs, attrs, data_to_predict, db):
