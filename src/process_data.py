@@ -40,7 +40,6 @@ def process_database_file(path_manager):
     
     attributes, classifier_column, classifier_attr_cols, missing_symbol = read_attributes(path_manager.get_current_selected_dir(), data_filename)
 
-    print(attributes)
     return db(db_data, attributes, classifier_column, classifier_attr_cols, missing_symbol)
 
 # Reads in the attribute file from a database, and returns the attributes as a list
@@ -92,7 +91,6 @@ def needs_conversion(database, attribute_col):
         try:
             float(data_row[attribute_col])
         except ValueError:
-            print("Not a float")
             return False
     return True
 
