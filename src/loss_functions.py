@@ -75,8 +75,8 @@ bin_results = [
 
 classes = ['republican', 'democrat']
 
-print(precision_non_binary(bin_results, classes))
-print(recall_non_binary(bin_results, classes))
+# print(precision_non_binary(bin_results, classes))
+# print(recall_non_binary(bin_results, classes))
 
 
 

@@ -1,5 +1,6 @@
 import classifier
 from copy import deepcopy
+from loss_functions import *
 
 """ -------------------------------------------------------------
 @param  k                   The number of folds we are using for k-fold cross validation
@@ -59,5 +60,8 @@ def k_fold(k,binned_data_set,bin_lengths):
         print('\n \n \n Incorrect Guesses: \n \n')
         print(len(incorrect_guesses))
         print(" \n \n \n training probs \n \n \n" + str(training_probs))
+        # precision_non_binary()
+        # recall_non_binary()
+
 
     print(binned_guess_results)
