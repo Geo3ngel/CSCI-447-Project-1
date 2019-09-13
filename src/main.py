@@ -9,6 +9,9 @@ import process_data
 import classifier
 import k_fold_cross_validation
 from path_manager import pathManager as pm
+import xlwt
+from xlwt import Workbook
+import statistics
 
 # Asks for user to select a database from a list presented from current database collection directory.
 def select_database(databases):
@@ -79,5 +82,51 @@ print('---------------------')
 post_shuffle = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, True)
 print("0/1 Loss: ", post_shuffle)
 
+# classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
 
-print("\nFinished.")
+# print(classified_data)
+
+# print("\n\nRunning calc_prob_of_response():")
+# probs = classifier.calc_prob_of_response(classified_data)
+# print('\n\nprobs:\n')
+# print(probs)
+# print('\n\nprobs Products:\n')
+# print(classifier.predict(probs,['a2'],temp_attr_headers,repaired_db[0]))
+
+wb = Workbook()
+sheet = wb.add_sheet("FUCK, SHIT.")
+
+sheet.write(0, 0, "PRECISION")
+sheet.write(0, 1, "RECALL")
+sheet.write(0, 2, "0/1 LOSS")
+
+binned_data = classifier.separate_data(db.get_attr(),db.get_data())
+
+precision_list = []
+recall_list = []
+loss_list = []
+
+for i in range(1,1001):
+    precision, recall, loss = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, True)
+    
+    precision_list.append(precision)
+    recall_list.append(recall)
+    loss_list.append(loss)
+    
+wb.save('rand_results_'+str(selected_database)+'.xls')
+
+print("\nPRECISION:")
+print("Mean:", statistics.mean(precision_list))
+print("Standard deviation:", statistics.stdev(precision_list))
+
+print("\nRECALL:")
+print("Mean:", statistics.mean(recall_list))
+print("Standard deviation:", statistics.stdev(recall_list))
+
+print("\nLOSS:")
+print("Mean:", statistics.mean(loss_list))
+print("Standard deviation:", statistics.stdev(loss_list))
+
+print("FINISHED.")
+
+# Use this site to plot stuff: https://www.essycode.com/distribution-viewer/
