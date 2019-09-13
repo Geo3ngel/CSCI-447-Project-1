@@ -19,6 +19,8 @@ def k_fold(k,binned_data_set,bin_lengths, db):
     binned_guess_results = []
     attr_headers = db.get_attr()
     class_list = db.get_classifiers()
+    precision_values = []
+    recall_values = []
     # For each bin in our data
     for bin_number in range(k):
         incorrect_guesses = []
@@ -60,6 +62,12 @@ def k_fold(k,binned_data_set,bin_lengths, db):
         #print(len(correct_guesses))
         #print('\n \n \n Incorrect Guesses: \n \n')
         #print(len(incorrect_guesses))
+        recall_values.append(recall_non_binary([incorrect_guesses, correct_guesses], class_list))
+        precision_values.append(precision_non_binary([incorrect_guesses,correct_guesses], class_list))
+        print("PRECISION: ", sum(precision_values) / len(precision_values))
+        print("RECALL: ", sum(recall_values) / len(recall_values))
+
+
         
     #print(" \n \n \n Binned Guess Results\n \n \n")
     #print(binned_guess_results)
