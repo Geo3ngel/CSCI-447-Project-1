@@ -135,6 +135,11 @@ $TP_i$ denotes the number of true positive classifications for class $i$, $FP_i$
 
 
 \section{Results}
+
+\section{Conclusions}
+\subsection{Breast Cancer Wisconsin}
+\subsection{Glass}
+\subsection{Iris}
 \begin{figure}[!hbp] % Credit to stack exchange user Masroor and user Stefan Kottwitz for the implementation of side by side figures in LaTeX
     \centering
     \begin{minipage}[b]{0.7\textwidth}
@@ -157,8 +162,10 @@ The graphs shown are of the normal distribution of the values obtains from our l
 
 To construct these graphs, we ran 1,000 iterations of 10-fold cross-validation and found the average for the 0-1 Loss, precision, and recall against the Iris database. For the graph relating to Iris' recall over 1,000 iterations of 10-fold cross-validation, we are 95\% confident that the true recall for our naive Bayes algorithm's ability to classify test data is between 0.359 and 0.386 via a 95\% confidence interval. Regarding 0-1 Loss (the proportion of correct guesses by the naive Bayes algorithm), we are 95\% confident that the true 0-1 Loss for our naive Bayes algorithm's ability to classify test data is between 0.884 and 0.956 via a 95\% confidence interval. Finally, regarding precision, we are 95\% confident that the true precision for our naive Bayes algorithm's ability to classify test data is between 0.394 and 0.405 via a 95\% confidence interval.
 
-% Acknowledgements should go at the end, before appendices and references
+\subsection{Soybean}
+\subsection{Voting Records}
 
+% Acknowledgements should go at the end, before appendices and references
 \acks{1. Davis, Jesse, and Mark Goadrich. "The Relationship between Precision-Recall and ROC Curves." Proceedings of the 23rd International Conference on Machine Learning - ICML 06, 2006, doi:10.1145/1143844.1143874. \\ \\
 2. Dietterich, Thomas G. "Machine Learning for Sequential Data: A Review." Lecture Notes in Computer Science Structural, Syntactic, and Statistical Pattern Recognition, 2002, pp. 15-30., doi:10.1007/3-540-70659-32. \\ \\
 3. Nédellec, Claire, and Céline Rouveirol, editors. “Machine Learning: ECML-98.” Lecture Notes in Computer Science, Springer Berlin Heidelberg, 1998. pp. 1-2., doi:10.1007/bfb0026664.}
