@@ -88,12 +88,16 @@ process_data.convert(db.get_data())
 
 # print("\nRunning classifier...")
 # print('\n\n\n\n\nRunning classify_db():')
-binned_data = classifier.separate_data(db.get_attr(),db.get_data())
-print('\n \n \n Pre-shuffle 0/1 loss: ')
-print(k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, False))
-print('\n \n \n Post-shuffle 0/1 loss: ')
-print(k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, True))
 
+binned_data = classifier.separate_data(db.get_attr(),db.get_data())
+print('\n \n Pre-shuffle')
+print('---------------------')
+pre_shuffle = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, False)
+print("0/1 Loss: ", pre_shuffle)
+print('\n \n Post-shuffle')
+print('---------------------')
+post_shuffle = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, True)
+print("0/1 Loss: ", post_shuffle)
 
 # classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
 
