@@ -52,8 +52,7 @@ path_manager.set_current_selected_folder(selected_database)
 # Processes the file path of the database into a pre processed database ready to be used as a learning/training set.
 db = process_data.process_database_file(path_manager)
 
-print("ATTRIBU{TES:}", db.get_attr())
-print(db.get_classifier_attribute_index())
+print("ATTRIBUTES:", db.get_attr())
 # ### Sanity checks. TODO: move to a unit test case file.
 normal_data, irregular_data = process_data.identify_missing_data(db)
 

@@ -220,11 +220,15 @@ def predict(probs, attrs, data_to_predict, db):
     classes = []
     for key in probs.keys():
         probs_products.append(1)
-    print(probs_products)
+    
     for class_idx, data_class in enumerate(probs):
         classes.append(data_class)
         for attribute_idx in attribute_indexes:
             if attribute_idx != db.get_classifier_col():
-                probs_products[class_idx] *= probs[data_class][attrs[attribute_idx]][data_to_predict[attribute_idx]][1]
+                print(probs[data_class][attrs[attribute_idx]][data_to_predict[attribute_idx]])
+                if probs[data_class][attrs[attribute_idx]][data_to_predict[attribute_idx]][1] != {}:
+                    probs_products[class_idx] *= probs[data_class][attrs[attribute_idx]][data_to_predict[attribute_idx]][1]
+                else:
+                    probs_products[class_idx] *= 0
     return classes[probs_products.index(max(probs_products))]
 
