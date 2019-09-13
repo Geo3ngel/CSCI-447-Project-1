@@ -1,6 +1,7 @@
 import classifier
 from copy import deepcopy
 from loss_functions import *
+import process_data
 
 """ -------------------------------------------------------------
 @param  k                   The number of folds we are using for k-fold cross validation
@@ -14,9 +15,10 @@ from loss_functions import *
            Then classify the training data and calculate the probabilities. Run prediction on each row of the test_data set and return an array of guess results containing guess results
            associated with each bin, as every bin will be the test bin at some point.
 """
-def k_fold(k,binned_data_set,bin_lengths, db):
+def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
     #print (binned_data_set)
     binned_guess_results = []
+    percent_correct_bins = []
     attr_headers = db.get_attr()
     class_list = db.get_classifiers()
     precision_values = []
@@ -39,6 +41,8 @@ def k_fold(k,binned_data_set,bin_lengths, db):
         for row_idx2 in range(len(training_data)):
             training_data[row_idx2].pop(0)
 
+        if shuffle:
+            training_data = process_data.shuffle_all(training_data,.1)
         # Classify our training data set, so we can calculate the probabilites
         classified_training_data = classifier.classify_db(attr_headers, training_data, db.get_classifier_col())
 
@@ -58,16 +62,14 @@ def k_fold(k,binned_data_set,bin_lengths, db):
                 incorrect_guesses.append([test_row[db.get_classifier_col()],predicted])
                 
         binned_guess_results.append([incorrect_guesses,correct_guesses])
-        #print('\n \n \n Correct Guesses: \n \n')
-        #print(len(correct_guesses))
-        #print('\n \n \n Incorrect Guesses: \n \n')
-        #print(len(incorrect_guesses))
         recall_values.append(recall_non_binary([incorrect_guesses, correct_guesses], class_list))
         precision_values.append(precision_non_binary([incorrect_guesses,correct_guesses], class_list))
         print("PRECISION: ", sum(precision_values) / len(precision_values))
         print("RECALL: ", sum(recall_values) / len(recall_values))
-
-
+        percent_correct_bins.append(len(correct_guesses)/(len(incorrect_guesses)+len(correct_guesses)))
+    
+    return sum(percent_correct_bins)/len(percent_correct_bins)
+    
         
     #print(" \n \n \n Binned Guess Results\n \n \n")
     #print(binned_guess_results)

@@ -1,4 +1,4 @@
-
+"""
 @file       database.py
 @authors    George Engel, Troy Oster, Dana Parker, Henry Soule
 @brief      Object that stores the information of
@@ -40,7 +40,7 @@ class database:
     
     def get_missing_symbol(self):
         return self.missing_symbol
-    
+"""  
 @file       database.py
 @authors    George Engel, Troy Oster, Dana Parker, Henry Soule
 @brief      Object that stores the information of

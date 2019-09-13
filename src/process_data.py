@@ -219,12 +219,13 @@ def bootstrap_selection(normal_data, malformed_row, missing_data_val):
 
 
 def shuffle_all(training_data, percent):
-        if len(training_data) > 0:
-            attribute_count = 0
-            for attribute in training_data[0]:
-                shuffle_data(percent, attribute_count)
-                attribute_count += 1
-        
+    return_data = training_data
+    if len(return_data) > 0:
+        attribute_count = 0
+        for attribute in return_data[0]:
+            shuffle_data(return_data, percent, attribute_count)
+            attribute_count += 1
+    return return_data
     
 # Shuffles X% of the data for an attribute specified by row of dataset.
 def shuffle_data(training_data, percent, attribute):
@@ -257,6 +258,6 @@ def shuffle_data(training_data, percent, attribute):
             temp_attribute = temp
         
         training_data += shuffling
-        print("Data Shuffled by",(percent*100),"%")
+        # print("Data Shuffled by",(percent*100),"%")
     else:
         print("ERROR: can't shuffle more than the size of the database.")
