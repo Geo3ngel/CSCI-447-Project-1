@@ -57,12 +57,12 @@
 
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
 
-A brief, one paragraph abstract summarizing the results of the experiments
+In this assignment, we implemented the naive Bayes prediction model on 5 data sets. We utilized 10-fold cross-validation to test our implementation and measured accuracy with two loss functions: 0-1 loss, and Precision/Recall.
 
 \end{abstract}
 
 \begin{keywords}
-    Keywords, Go, Here
+    Bayes, 0-1 Loss, Precision/Recall, 
 %   Bayesian Networks, Mixture Models, Chow-Liu Trees
 \end{keywords}
 
@@ -72,13 +72,12 @@ The naive Bayes classification model is a simple model for predicting data class
 \section{Problem Statement}
 Given a data set of which all the correct classifications are known, we can implement and execute a training algorithm on a subset of the data. Then, once trained, the algorithm will guess the classes of another subset of the data and measure the performance. For this assignment, we were provided with 5 real-world data sets. Our task was to implement a training algorithm and guess classifications for each of these 5 data sets and then utilize two different loss functions to measure the accuracy and performance of our predictions. We ran this algorithm on the original versions of each data set, and then introduced noise to each of the data sets by shuffling attribute values among 10\% of the values, and ran the algorithm of the five shuffled versions of the data. \\ \\
 % Hypotheses
-Our hypotheses for each data set are as follows: \\
-
-\textit{Breast Cancer Wisconsin:} This data set is comprised of 9 quantitative variables, and each data example can be classified as either benign or malignant. We hypothesized that, given that there are only two possible classifications, that we will acheive no less than 85\% accuracy (i.e. a 0-1 loss score of 0.75) on our unshuffled data. \\ \\
-\textit{Glass:} This data set is comprised of 7 quantitative variables, and each data example can be classified as one of 7 possible glass types: building\_windows\_float\_processed, building\_windows\_non\_float\_processed, vehicle\_windows\_float\_processed, vehicle\_windows\_non\_float\_processed, containers, tableware, or headlamps. We hypothesize that we will achieve no less that 65\% accuracy for this data set, given that there are 7 potential classes. \\ \\
-\textit{Iris:} This dataset is comprised of 4 quantitative variables. Each data example can be classified as one of three different flower types. We are predicting approximately 75\% accuracy. \\ \\
-\textit{Soybean:} This dataset is comprised of 35 attributes, and each data example can be classified as one of four different classifiers. We hypothesize 70\% accuracy for this data set. \\ \\
-\textit{Voting Records:} This data set is comprised \\
+Our hypotheses for each data set are as follows: \\ \\
+\textit{Breast Cancer Wisconsin:} This data set is comprised of 9 quantitative variables, and each data example can be classified as either benign or malignant. We hypothesized that, given that there are only two possible classifications, that we will achieve no less than 85\% accuracy (i.e. a 0-1 loss score of 0.75) on our unshuffled data. We think that the shuffled breast cancer data will be no more than 3\% less accurate. \\ \\
+\textit{Glass:} This data set is comprised of 7 quantitative variables, and each data example can be classified as one of 7 possible glass types: building\_windows\_float\_processed, building\_windows\_non\_float\_processed, vehicle\_windows\_float\_processed, vehicle\_windows\_non\_float\_processed, containers, tableware, or headlamps. We hypothesize that we will achieve no less that 65\% accuracy (0-1 loss of 0.65) for the unshuffled data, given that there are 7 potential classes. The shuffled data, we predict, will be no more than 5\% less accurate than the shuffled data.\\ \\
+\textit{Iris:} This dataset is comprised of 4 quantitative variables. Each data example can be classified as one of three different flower types. We are predicting approximately 75\% (0-1 loss of 0.75) accuracy. \\ \\
+\textit{Soybean:} This dataset is comprised of 35 attributes, and each data example can be classified as one of four different classifiers. We hypothesize 70\% accuracy (0-1 loss of 0.7) for this unshuffled data. For the shuffled data we are predicting the accuracy to be approximately 3\% less accurate.\\ \\
+\textit{Voting Records:} This data set is comprised 16 categorical attributes, and each example may be classified as either republican or democrat. We are hypothesizing approximately 85\% accuracy (0-1 loss of 0.85) for this dataset. We are predicting that the shuffled voting-record data should no more than 3\% less accurate than the shuffled data.\\
 
 \section{The Algorithm}
 Per the instructions of the assignment, we implemented the naive Bayes algorithm on the 5 provided data sets. Given some example $x \in X$, where $X$ is our data set, naive Bayes predicts the correct class $c$ of $x$ by computing the probabilities of each possible classification for $x$. For class $c$, the probability is denoted as $P(c | a_1, a_2,...,a_d)$ where $a_k$ denotes one of $d$ attribute values in $x$. To compute this probability for each class $c$, the probabilities of each attribute value are computed. For each attribute value $a_k$, we compute $P(c) * \prod^d_{i=0} P(a_i | c)$, where $P(c)$ is the probability of an attribute being classified as class $c$. To predict the correct class for $x$ we compute $\underset{c \in C}{\mathrm{argmax}}$ $P(c) * \prod^d_{i=0} P(a_i | c)$.
