@@ -56,8 +56,8 @@ db = process_data.process_database_file(path_manager)
 normal_data, irregular_data = process_data.identify_missing_data(db)
 
 corrected_data = process_data.extrapolate_data(normal_data, irregular_data, db.get_missing_symbol())
-print("\nNormal Data:")
-print_database(normal_data)
+# print("\nNormal Data:")
+# print_database(normal_data)
 
 # -------------------------------------------------------------
 
