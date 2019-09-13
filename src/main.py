@@ -69,16 +69,16 @@ db.set_data(repaired_db)
 
 process_data.convert(db.get_data())
 
-binned_data = classifier.separate_data(db.get_attr(),db.get_data())
+# binned_data = classifier.separate_data(db.get_attr(),db.get_data())
 
-print('\n \n Pre-shuffle')
-print('---------------------')
-pre_shuffle = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, False)
-print("0/1 Loss: ", pre_shuffle)
-print('\n \n Post-shuffle')
-print('---------------------')
-post_shuffle = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, True)
-print("0/1 Loss: ", post_shuffle)
+# print('\n \n Pre-shuffle')
+# print('---------------------')
+# pre_shuffle = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, False)
+# print("0/1 Loss: ", pre_shuffle)
+# print('\n \n Post-shuffle')
+# print('---------------------')
+# post_shuffle = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, True)
+# print("0/1 Loss: ", post_shuffle)
 
 # classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
 
@@ -93,6 +93,9 @@ print("0/1 Loss: ", post_shuffle)
 
 binned_data = classifier.separate_data(db.get_attr(),db.get_data())
 
+# n stands for normal, as in before noise was applied.
+n_precision, n_recall, n_loss = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, False)
+
 precision_list = []
 recall_list = []
 loss_list = []
@@ -100,9 +103,9 @@ loss_list = []
 for i in range(1,1001):
     precision, recall, loss = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, True)
     
-    precision_list.append(precision)
-    recall_list.append(recall)
-    loss_list.append(loss)
+    precision_list.append(n_precision-precision)
+    recall_list.append(n_recall-recall)
+    loss_list.append(n_loss-loss)
     
 print("\nPRECISION:")
 print("Mean:", statistics.mean(precision_list))
