@@ -5,31 +5,11 @@ import os
 import process_data
 from path_manager import pathManager as pm
 
-def precision_binary(TP, FP):
-    return TP / (TP + FP)
-
-def recall_binary(TP, FN):
-    return TP / TP + FN
-
-'''
-binned_guess_results: [[<incorrect_guesses>, <correct_guesses>]]
-incorrect_guesses: [[expected answer,incorrect guess]]
-correct_guesses: [correct guess]
-'''
-guess_results = [
-    #bin 1:
-    [
-        #incorrect guesses:
-        [['republican', 'democrat'], ['democrat', 'republican'], ['democrat', 'republican']],
-        #correct guesses:
-        ['republican', 'democrat', 'democrat', 'republican']
-    ]
-]
 #bin:
-bin_results = [
-    [['republican', 'democrat'], ['democrat', 'republican'], ['democrat', 'republican']],
-    ['republican', 'democrat', 'democrat', 'republican', 'republican']
-]
+# bin_results = [
+#     [['', ''], ['', 'republican'], ['democrat', 'republican']],
+#     ['republican', 'democrat', 'democrat', 'republican', 'republican']
+# ]
 
 classes = ['republican', 'democrat']
 # Get true positive guesses
@@ -57,10 +37,6 @@ def false_negatives(bin_results, classes):
         FN[classes.index(guess[0])] += 1
     return FN
 
-print("True Positives: ", true_positives(bin_results, classes))
-print("False Positives: ", false_positives(bin_results, classes))
-print("False Negatives: ", false_negatives(bin_results, classes))
-
 
 '''----------------------------------------
 @param  bin_results the set of guesses for the current bin
@@ -83,7 +59,9 @@ def precision_non_binary(bin_results, classes):
 @param  classes     a set of the class names for the current dataset
 @return the recall score for this current bin
 '''
-def recall_non_binary(TP, FN):
+def recall_non_binary(bin_results, classes):
+    TP = true_positives(bin_results, classes)
+    FN = false_negatives(bin_results, classes)
     recall = 0
     
     for i in range(len(TP)):
