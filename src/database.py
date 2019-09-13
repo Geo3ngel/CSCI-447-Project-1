@@ -61,26 +61,26 @@ class database:
         
         return classifiers
     
-    def shuffle_all(self, percent):
-        if len(self.data) > 0:
+    def shuffle_all(training_data, percent):
+        if len(training_data) > 0:
             attribute_count = 0
-            for attribute in self.data[0]:
-                self.shuffle_data(percent, attribute_count)
+            for attribute in training_data[0]:
+                shuffle_data(percent, attribute_count)
                 attribute_count += 1
         
     
     # Shuffles X% of the data for an attribute specified by row of dataset.
-    def shuffle_data(self, percent, attribute):
+    def shuffle_data(training_data, percent, attribute):
         
         shuffling = []
         
         if(percent <= 100):
-            num_to_shuffle = int(len(self.data) * percent)
+            num_to_shuffle = int(len(training_data) * percent)
             
             # Will need to pull X% of the rows out of the database at random
             for iter in range(0, num_to_shuffle):
-                data_row = random.choice(self.data)
-                self.data.remove(data_row)
+                data_row = random.choice(training_data)
+                training_data.remove(data_row)
                 
                 # Adds the row data to be shuffled.
                 shuffling.append(data_row)
@@ -91,7 +91,7 @@ class database:
             
             # Sets the first row's attribute equal to the last row's.
             shuffling[0][attribute] = last_attribute
-            self.data.append(shuffling.pop(0))
+            training_data.append(shuffling.pop(0))
             
             # Shuffles remaining data
             for data_row in shuffling:
@@ -99,7 +99,7 @@ class database:
                 data_row[attribute] = temp_attribute
                 temp_attribute = temp
             
-            self.data += shuffling
+            training_data += shuffling
             print("Data Shuffled by",(percent*100),"%")
         else:
             print("ERROR: can't shuffle more than the size of the database.")

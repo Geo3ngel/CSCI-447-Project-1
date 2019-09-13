@@ -82,11 +82,6 @@ else:
     
 db.set_data(repaired_db)
 
-db.shuffle_all(.1)
-
-print("\n\nShuffled data:\n\n")
-print_database(db.get_data())
-
 process_data.convert(db.get_data())
 
 print("\n\n\nFINAL DATABASE:\n\n\n")
