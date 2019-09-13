@@ -86,7 +86,7 @@ Problem statement, including hypothesis
 \section{Problem Statement}
 
 \section{Algorithm}
-Per the instructions of the assignment, we implemented the naive Bayes algorithm on the five provided datasets. Given some example $x \in X$, where $X$ is our dataset, naive Bayes predicts the correct class $c$ of $x$ by computing the probabilities of each possible classification for $x$. For class $c$, the probability is denoted as follows: $P(c | a_1, a_2,...,a_d)$ where $a_k$ denotes one of $d$ attribute values in $x$. To compute this probability for each class $c$, the probabilities of each attribute value are computed. The
+Per the instructions of the assignment, we implemented the naive Bayes algorithm on the five provided datasets. Given some example $x \in X$, where $X$ is our dataset, naive Bayes predicts the correct class $c$ of $x$ by computing the probabilities of each possible classification for $x$. For class $c$, the probability is denoted as follows: $P(c | a_1, a_2,...,a_d)$ where $a_k$ denotes one of $d$ attribute values in $x$. To compute this probability for each class $c$, the probabilities of each attribute value are computed. For each attribute value $a_k$, we compute $\prod^d_{i=0} P(a_i | c)$
 
 % Acknowledgements should go at the end, before appendices and references
 
