@@ -68,11 +68,16 @@ def classify_db(attrs, db, class_idx):
 
         # For each attribute in the current row..
         for attr_idx in range(len(row)):
-
+            
             # If the current attribute isn't the "class" attribute or the class's count...
             if attr_idx != class_idx and row[attr_idx] != 'count':
                 # If the current attribute isn't already in
                 # the data_tbl for the current class...
+                print(row)
+                print(len(attrs))
+                print(attr_idx)
+                print(attrs[attr_idx])
+                
                 if row[attr_idx] not in data_tbl[row[class_idx]][attrs[attr_idx]]:
                     # Make the current attribute a key for the current class
                     # and make that attribute's response count
