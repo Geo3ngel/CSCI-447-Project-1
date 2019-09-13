@@ -40,4 +40,3 @@ class database:
     
     def get_missing_symbol(self):
         return self.missing_symbol
-    
