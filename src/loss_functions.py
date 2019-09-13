@@ -5,6 +5,16 @@ import os
 import process_data
 from path_manager import pathManager as pm
 
+""" -------------------------------------------------------------
+@param  prob  The probability of the guessed attribute value being correct
+              given the likelihood provided by the given attributes' conditional probabilities
+
+@return       The negative natural logarithm of @param prob
+@brief        An implementation of a cross entropy loss function
+"""
+def cross_entropy(prob):
+    return -np.log(prob)
+
 # Get true positive guesses
 def true_positives(bin_results, classes):
     correct = bin_results[1]
