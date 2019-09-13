@@ -119,7 +119,7 @@ Side note: It is fairly obvious we didn't choose this method for it’s efficien
 
 
 \subsection{Separating and classifying data}
-To properly implement naive Bayes [3] on the 5 data sets, we first needed to properly separate and classify each data set. Each data set needed to be separated by class, and then the count and probability of each attribute value for each class needed to be computed. Our approach for this was to create, for each dataset, an associative array, where each possible classifier was a key. For each key, the corresponding values were each their own associative arrays, the keys of which were all the extant attribute values among that class. The value of each key in these inner arrays was a set storing the count and conditional probability of each attribute value given the respective class. \\ \\
+To properly implement naive Bayes [3] on the 5 data sets, we first needed to properly separate and classify each data set. Each data set needed to be separated by class, and then the count and probability of each attribute value for each class needed to be computed. Our approach for this was to create, for each data set, an associative array, where each possible classifier was a key. For each key, the corresponding values were each their own associative arrays, the keys of which were all the extant attribute values among that class. The value of each key in these inner arrays was a set storing the count and conditional probability of each attribute value given the respective class. \\ \\
 
 \subsection{K-Fold Cross Validation}
 We tested our algorithm's implementation using 10-fold cross-validation. This validation model separates each data set into 10 subsets, or "bins", of equal size. It then runs 10 iterations. During each iteration, one bin is designated as the test data, being the data we will test our prediction algorithm on. The other 9 bins are designated as training data. It is on this training data subset that we will execute our learning algorithm, from which we will base our predictions. After first running the training algorithm on these 9 bins, we then predict the classifications of each example in the designated test data. For each iteration, a different bin is designated as test data, while the other 9 are designated as the training data. \\ \\
@@ -141,29 +141,78 @@ $TP_i$ denotes the number of true positive classifications for class $i$, $FP_i$
 
 \subsection{Loss function 2: 0-1 Loss}
 -TODO: describe Loss function in a similar function to precision recall.
-
+TODO: DANA PUT HERE
 
 \section{Results}
+TODO: DANA PUT HERE
 
 \section{Conclusions}
+
 \subsection{Breast Cancer Wisconsin}
+
+\begin{figure}[!hbp] % Credit to stack exchange user Masroor and user Stefan Kottwitz for the implementation of side by side figures in LaTeX
+    \centering
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{bc-l-ms.png}
+        \includegraphics[width=\textwidth]{bc-l-ds.png}
+        \caption{Average difference between 0/1 Loss for normal data set and noise data set for \emph{Breast Cancer Wisconsin} (over 1,000 iterations)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{bc-p-ms.png}
+        \includegraphics[width=\textwidth]{bc-l-ds.png}
+        \caption{Average difference between Precision for normal data set and noise data set for\emph{Breast Cancer Wisconsin} (over 1,000 iterations)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{bc-r-ms.png}
+        \includegraphics[width=\textwidth]{bc-r-ds.png}
+        \caption{Average difference between Recall for normal data set and noise data set for \emph{Breast Cancer Wisconsin} (over 1,000 iterations)}
+    \end{minipage}
+\end{figure}
+
 \subsection{Glass}
+
+\begin{figure}[!hbp] % Credit to stack exchange user Masroor and user Stefan Kottwitz for the implementation of side by side figures in LaTeX
+    \centering
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{g-l-ms.png}
+        \includegraphics[width=\textwidth]{g-l-ds.png}
+        \caption{Average difference between 0/1 Loss for normal data set and noise data set for \emph{Glass} (over 1,000 iterations)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{g-p-ms.png}
+        \includegraphics[width=\textwidth]{g-l-ds.png}
+        \caption{Average difference between Precision for normal data set and noise data set for\emph{Glass} (over 1,000 iterations)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{g-r-ms.png}
+        \includegraphics[width=\textwidth]{g-r-ds.png}
+        \caption{Average difference between Recall for normal data set and noise data set for \emph{Glass} (over 1,000 iterations)}
+    \end{minipage}
+\end{figure}
+
 \subsection{Iris}
 \begin{figure}[!hbp] % Credit to stack exchange user Masroor and user Stefan Kottwitz for the implementation of side by side figures in LaTeX
     \centering
-    \begin{minipage}[b]{0.7\textwidth}
-      \includegraphics[width=\textwidth]{01_loss_graph.png}
-      \caption{Average 0/1 Loss for \emph{Iris} (over 1,000 iterations)}
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{iris-loss-ms.png}
+        \includegraphics[width=\textwidth]{densityfunc-iris-loss.png}
+        \caption{Average difference between 0/1 Loss for normal data set and noise data set for \emph{Iris} (over 1,000 iterations)}
     \end{minipage}
     \hfill
-    \begin{minipage}[b]{0.4\textwidth}
-      \includegraphics[width=\textwidth]{precision_graph.png}
-      \caption{Average Precision for \emph{Iris} (over 1,000 iterations)}
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{iris-precs-ms.png}
+        \includegraphics[width=\textwidth]{densityfunction-iris-precision.png}
+        \caption{Average difference between Precision for normal data set and noise data set for\emph{Iris} (over 1,000 iterations)}
     \end{minipage}
     \hfill
-    \begin{minipage}[b]{0.4\textwidth}
-        \includegraphics[width=\textwidth]{recall_graph.png}
-        \caption{Average Recall for \emph{Iris} (over 1,000 iterations)}
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{iris-recall-ms.png}
+        \includegraphics[width=\textwidth]{densityfunc-iris-recall.png}
+        \caption{Average difference between Recall for normal data set and noise data set for \emph{Iris} (over 1,000 iterations)}
     \end{minipage}
 \end{figure}
 
@@ -172,7 +221,50 @@ The graphs shown are of the normal distribution of the values obtains from our l
 To construct these graphs, we ran 1,000 iterations of 10-fold cross-validation and found the average for the 0-1 Loss, precision, and recall against the Iris database. For the graph relating to Iris' recall over 1,000 iterations of 10-fold cross-validation, we are 95\% confident that the true recall for our naive Bayes algorithm's ability to classify test data is between 0.359 and 0.386 via a 95\% confidence interval. Regarding 0-1 Loss (the proportion of correct guesses by the naive Bayes algorithm), we are 95\% confident that the true 0-1 Loss for our naive Bayes algorithm's ability to classify test data is between 0.884 and 0.956 via a 95\% confidence interval. Finally, regarding precision, we are 95\% confident that the true precision for our naive Bayes algorithm's ability to classify test data is between 0.394 and 0.405 via a 95\% confidence interval.
 
 \subsection{Soybean}
+
+\begin{figure}[!hbp] % Credit to stack exchange user Masroor and user Stefan Kottwitz for the implementation of side by side figures in LaTeX
+    \centering
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{soybean-l-ms.png}
+        \includegraphics[width=\textwidth]{soybean-l-df.png}
+        \caption{Average difference between 0/1 Loss for normal data set and noise data set for \emph{Soybean} (over 1,000 iterations)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{soybean-p-ms.png}
+        \includegraphics[width=\textwidth]{soybean-l-df.png}
+        \caption{Average difference between Precision for normal data set and noise data set for\emph{Soybean} (over 1,000 iterations)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{soybean-r-ms.png}
+        \includegraphics[width=\textwidth]{soybean-r-df.png}
+        \caption{Average difference between Recall for normal data set and noise data set for \emph{Soybean} (over 1,000 iterations)}
+    \end{minipage}
+\end{figure}
+
 \subsection{Voting Records}
+
+\begin{figure}[!hbp] % Credit to stack exchange user Masroor and user Stefan Kottwitz for the implementation of side by side figures in LaTeX
+    \centering
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{vr-l-ms.png}
+        \includegraphics[width=\textwidth]{vr-l-df.png}
+        \caption{Average difference between 0/1 Loss for normal data set and noise data set for \emph{Voting Records} (over 1,000 iterations)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{vr-p-ms.png}
+        \includegraphics[width=\textwidth]{vr-p-df.png}
+        \caption{Average difference between Precision for normal data set and noise data set for\emph{Voting Records} (over 1,000 iterations)}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{vr-r-ms.png}
+        \includegraphics[width=\textwidth]{vr-r-df.png}
+        \caption{Average difference between Recall for normal data set and noise data set for \emph{Voting Records} (over 1,000 iterations)}
+    \end{minipage}
+\end{figure}
 
 % Acknowledgements should go at the end, before appendices and references
 \acks{1. Davis, Jesse, and Mark Goadrich. "The Relationship between Precision-Recall and ROC Curves." Proceedings of the 23rd International Conference on Machine Learning - ICML 06, 2006, doi:10.1145/1143844.1143874. \\ \\
