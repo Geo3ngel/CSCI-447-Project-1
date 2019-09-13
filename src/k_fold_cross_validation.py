@@ -20,6 +20,9 @@ def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
     binned_guess_results = []
     percent_correct_bins = []
     attr_headers = db.get_attr()
+    class_list = db.get_classifiers()
+    precision_values = []
+    recall_values = []
     # For each bin in our data
     for bin_number in range(k):
         incorrect_guesses = []
@@ -59,6 +62,10 @@ def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
                 incorrect_guesses.append([test_row[db.get_classifier_col()],predicted])
                 
         binned_guess_results.append([incorrect_guesses,correct_guesses])
+        recall_values.append(recall_non_binary([incorrect_guesses, correct_guesses], class_list))
+        precision_values.append(precision_non_binary([incorrect_guesses,correct_guesses], class_list))
+        print("PRECISION: ", sum(precision_values) / len(precision_values))
+        print("RECALL: ", sum(recall_values) / len(recall_values))
         percent_correct_bins.append(len(correct_guesses)/(len(incorrect_guesses)+len(correct_guesses)))
     
     return sum(percent_correct_bins)/len(percent_correct_bins)

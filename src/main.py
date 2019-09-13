@@ -52,7 +52,6 @@ path_manager.set_current_selected_folder(selected_database)
 # Processes the file path of the database into a pre processed database ready to be used as a learning/training set.
 db = process_data.process_database_file(path_manager)
 
-print("ATTRIBUTES:", db.get_attr())
 # ### Sanity checks. TODO: move to a unit test case file.
 normal_data, irregular_data = process_data.identify_missing_data(db)
 
@@ -94,6 +93,7 @@ print('\n \n \n Pre-shuffle 0/1 loss: ')
 print(k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, False))
 print('\n \n \n Post-shuffle 0/1 loss: ')
 print(k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, True))
+
 
 # classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
 
