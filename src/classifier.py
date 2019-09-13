@@ -220,7 +220,7 @@ def predict(probs, attrs, data_to_predict, db):
     classes = []
     for key in probs.keys():
         probs_products.append(1)
-
+    print(probs_products)
     for class_idx, data_class in enumerate(probs):
         classes.append(data_class)
         for attribute_idx in attribute_indexes:

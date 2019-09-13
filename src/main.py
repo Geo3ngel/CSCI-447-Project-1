@@ -84,8 +84,8 @@ db.set_data(repaired_db)
 
 process_data.convert(db.get_data())
 
-print("\n\n\nFINAL DATABASE:\n\n\n")
-print_database(db.get_data())
+#print("\n\n\nFINAL DATABASE:\n\n\n")
+#print_database(db.get_data())
 # # -------------------------------------------------------------
 
 # print("\nRunning classifier...")
@@ -104,4 +104,4 @@ k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db)
 # print(probs)
 # print('\n\nprobs Products:\n')
 # print(classifier.predict(probs,['a2'],temp_attr_headers,repaired_db[0]))
-# print("\nFinished.")
+print("\nFinished.")

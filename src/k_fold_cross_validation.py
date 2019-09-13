@@ -37,30 +37,28 @@ def k_fold(k,binned_data_set,bin_lengths, db):
             training_data[row_idx2].pop(0)
 
         # Classify our training data set, so we can calculate the probabilites
-        classified_training_data = classifier.classify_db(attr_headers, training_data, 0)
+        classified_training_data = classifier.classify_db(attr_headers, training_data, db.get_classifier_col())
 
         # Calculate the probabilities
         training_probs = classifier.calc_prob_of_response(classified_training_data)
-
+        #print('\n \n \n Training Probs: \n \n \n')
+        #print(training_probs)
         # For each row (sample) in our test_data, try to predict its class
         for test_row in test_data:
             predicted = classifier.predict(training_probs, attr_headers, test_row, db)
             
             # If the class is guessed correctly, append the value to the correct_guesses list
-            if  predicted== test_row[0]:
+            if  predicted== test_row[db.get_classifier_col()]:
                 correct_guesses.append(predicted)
             # If the class is guessed incorrectly, append both the expected and predicted value to the incorrect_guesses list
             else:
-                incorrect_guesses.append([test_row[0],predicted])
+                incorrect_guesses.append([test_row[db.get_classifier_col()],predicted])
                 
         binned_guess_results.append([incorrect_guesses,correct_guesses])
-        print('\n \n \n Correct Guesses: \n \n')
-        print(len(correct_guesses))
-        print('\n \n \n Incorrect Guesses: \n \n')
-        print(len(incorrect_guesses))
-        print(" \n \n \n training probs \n \n \n" + str(training_probs))
-        # precision_non_binary()
-        # recall_non_binary()
-
-
-    print(binned_guess_results)
+        #print('\n \n \n Correct Guesses: \n \n')
+        #print(len(correct_guesses))
+        #print('\n \n \n Incorrect Guesses: \n \n')
+        #print(len(incorrect_guesses))
+        
+    #print(" \n \n \n Binned Guess Results\n \n \n")
+    #print(binned_guess_results)
