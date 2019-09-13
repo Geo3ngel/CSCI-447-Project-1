@@ -60,8 +60,7 @@ def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
 
         # Calculate the probabilities
         training_probs = classifier.calc_prob_of_response(classified_training_data)
-        #print('\n \n \n Training Probs: \n \n \n')
-        #print(training_probs)
+
         # For each row (sample) in our test_data, try to predict its class
         for test_row in test_data:
             predicted = classifier.predict(training_probs, attr_headers, test_row, db)
@@ -80,8 +79,4 @@ def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
         
     print("PRECISION: ", sum(precision_values) / len(precision_values))
     print("RECALL: ", sum(recall_values) / len(recall_values))
-    return [sum(percent_correct_bins)/len(percent_correct_bins), training_probs]
-    
-        
-    #print(" \n \n \n Binned Guess Results\n \n \n")
-    #print(binned_guess_results)
+    return sum(percent_correct_bins)/len(percent_correct_bins)
