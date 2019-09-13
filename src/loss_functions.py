@@ -5,13 +5,6 @@ import os
 import process_data
 from path_manager import pathManager as pm
 
-#bin:
-# bin_results = [
-#     [['', ''], ['', 'republican'], ['democrat', 'republican']],
-#     ['republican', 'democrat', 'democrat', 'republican', 'republican']
-# ]
-
-classes = ['republican', 'democrat']
 # Get true positive guesses
 def true_positives(bin_results, classes):
     correct = bin_results[1]
@@ -69,32 +62,21 @@ def recall_non_binary(bin_results, classes):
     
     return (1 / len(TP)) * recall
 
-# path_manager = pm()
-# path_manager.set_current_selected_folder('iris')
-# db = process_data.process_database_file(path_manager)
-# normal_data, irregular_data = process_data.identify_missing_data(db.get_data(), 'sepal width in cm')
 
+#bin:
+bin_results = [
+    [
+        ['republican', 'democrat'], 
+        ['democrat', 'republican'], 
+        ['democrat', 'republican']
+    ],
+    ['republican', 'democrat', 'democrat', 'republican', 'republican']
+]
 
-# attrs = ["sepal length", "sepal width", "petal length", "petal width", "class"]
+classes = ['republican', 'democrat']
 
-# classified_data = classify_db(attrs, normal_data, 4)
-# class_probs = get_class_probs(classified_data)
-# classified_data = calc_prob_of_response(classified_data)
-
-# binified_data = separate_data(attrs, db.get_data(), 'class')
-# classes = ['Iris-setosa', 'Iris-versicolor', 'Iris-verginica']
-
-
-# k_fold(10, classifier.separate_data(attrs,db.get_data())[0],classifier.separate_data(attrs,db.get_data())[1])
-
-
-# for row in binified_data:
-#     if row[0] == 9:
-#         # Let's start guessing!
-#         print("ROW: ", row)
-#         idx = calculate_class(row, classified_data, class_probs, 5)
-#         print("GUESSED CLASS: ", classes[idx])
-#         print("------------------------------")
+print(precision_non_binary(bin_results, classes))
+print(recall_non_binary(bin_results, classes))
 
 
 
