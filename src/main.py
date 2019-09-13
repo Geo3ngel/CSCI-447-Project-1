@@ -99,6 +99,7 @@ temp_attr_headers = ['pol','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11','
 binned_data = classifier.separate_data(temp_attr_headers,db.get_data())
 k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db)
 
+
 # classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
 
 # print(classified_data)

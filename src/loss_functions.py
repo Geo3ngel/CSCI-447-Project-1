@@ -1,6 +1,5 @@
 import numpy as np
 from classifier import *
-from k_fold_cross_validation import *
 import os
 import process_data
 from path_manager import pathManager as pm

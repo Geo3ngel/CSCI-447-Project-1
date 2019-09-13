@@ -52,6 +52,14 @@ class database:
         print("Error, class attribute not automatically located.")
         return -1
     
+    def get_classifiers(self):
+        class_idx = self.get_classifier_col()
+        classifiers = []
+        for row in self.data:
+            if row[class_idx] not in classifiers:
+                classifiers.append(row[class_idx])
+        
+        return classifiers
     
     def shuffle_all(self, percent):
         if len(self.data) > 0:
