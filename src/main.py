@@ -9,8 +9,6 @@ import process_data
 import classifier
 import k_fold_cross_validation
 from path_manager import pathManager as pm
-import xlwt
-from xlwt import Workbook
 import statistics
 
 # Asks for user to select a database from a list presented from current database collection directory.
@@ -93,13 +91,6 @@ print("0/1 Loss: ", post_shuffle)
 # print('\n\nprobs Products:\n')
 # print(classifier.predict(probs,['a2'],temp_attr_headers,repaired_db[0]))
 
-wb = Workbook()
-sheet = wb.add_sheet("FUCK, SHIT.")
-
-sheet.write(0, 0, "PRECISION")
-sheet.write(0, 1, "RECALL")
-sheet.write(0, 2, "0/1 LOSS")
-
 binned_data = classifier.separate_data(db.get_attr(),db.get_data())
 
 precision_list = []
@@ -113,8 +104,6 @@ for i in range(1,1001):
     recall_list.append(recall)
     loss_list.append(loss)
     
-wb.save('rand_results_'+str(selected_database)+'.xls')
-
 print("\nPRECISION:")
 print("Mean:", statistics.mean(precision_list))
 print("Standard deviation:", statistics.stdev(precision_list))
