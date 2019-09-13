@@ -214,21 +214,17 @@ def calc_prob_of_response(db):
     
     return db
 
-def predict(probs, attr_for_prediction, attrs, data_to_predict):
+def predict(probs, attrs, data_to_predict, db):
+    attribute_indexes = db.get_classifier_attr_cols()
     probs_products = []
     classes = []
-    attribute_indexes = []
     for key in probs.keys():
         probs_products.append(1)
-    for attribute in attr_for_prediction:
-        attribute_indexes.append(attrs.index(attribute))
 
     for class_idx, data_class in enumerate(probs):
         classes.append(data_class)
         for attribute_idx in attribute_indexes:
-
-            # TODO: change 0 to index of class
-            if attribute_idx != 0:
+            if attribute_idx != db.get_classifier_col():
                 probs_products[class_idx] *= probs[data_class][attrs[attribute_idx]][data_to_predict[attribute_idx]][1]
     return classes[probs_products.index(max(probs_products))]
 

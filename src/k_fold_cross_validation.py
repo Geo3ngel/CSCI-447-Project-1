@@ -14,11 +14,10 @@ from loss_functions import *
            Then classify the training data and calculate the probabilities. Run prediction on each row of the test_data set and return an array of guess results containing guess results
            associated with each bin, as every bin will be the test bin at some point.
 """
-def k_fold(k,binned_data_set,bin_lengths):
+def k_fold(k,binned_data_set,bin_lengths, db):
     #print (binned_data_set)
     binned_guess_results = []
-    temp_attr_headers = ['pol','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16','a17']
-    
+    attr_headers = db.get_attr()
     # For each bin in our data
     for bin_number in range(k):
         incorrect_guesses = []
@@ -38,14 +37,14 @@ def k_fold(k,binned_data_set,bin_lengths):
             training_data[row_idx2].pop(0)
 
         # Classify our training data set, so we can calculate the probabilites
-        classified_training_data = classifier.classify_db(temp_attr_headers, training_data, 0)
+        classified_training_data = classifier.classify_db(attr_headers, training_data, 0)
 
         # Calculate the probabilities
         training_probs = classifier.calc_prob_of_response(classified_training_data)
 
         # For each row (sample) in our test_data, try to predict its class
         for test_row in test_data:
-            predicted = classifier.predict(training_probs, ['a2','a6'], temp_attr_headers, test_row)
+            predicted = classifier.predict(training_probs, attr_headers, test_row, db)
             
             # If the class is guessed correctly, append the value to the correct_guesses list
             if  predicted== test_row[0]:
