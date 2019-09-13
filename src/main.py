@@ -52,14 +52,12 @@ path_manager.set_current_selected_folder(selected_database)
 # Processes the file path of the database into a pre processed database ready to be used as a learning/training set.
 db = process_data.process_database_file(path_manager)
 
-missing_data_val = input("\nEnter missing data value: ")
-
 print("ATTRIBU{TES:}", db.get_attr())
 print(db.get_classifier_attribute_index())
 # ### Sanity checks. TODO: move to a unit test case file.
-normal_data, irregular_data = process_data.identify_missing_data(db.get_data(), missing_data_val)
+normal_data, irregular_data = process_data.identify_missing_data(db)
 
-corrected_data = process_data.extrapolate_data(normal_data, irregular_data, missing_data_val)
+corrected_data = process_data.extrapolate_data(normal_data, irregular_data, db.get_missing_symbol())
 print("\nNormal Data:")
 print_database(normal_data)
 
@@ -98,7 +96,8 @@ print_database(db.get_data())
 # print("\nRunning classifier...")
 # print('\n\n\n\n\nRunning classify_db():')
 temp_attr_headers = ['pol','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16','a17']
-k_fold_cross_validation.k_fold(10,classifier.separate_data(temp_attr_headers,db.get_data())[0],classifier.separate_data(temp_attr_headers,db.get_data())[1])
+binned_data = classifier.separate_data(temp_attr_headers,db.get_data())
+k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1])
 
 # classified_data = classifier.classify_db(temp_attr_headers, repaired_db, 0)
 
