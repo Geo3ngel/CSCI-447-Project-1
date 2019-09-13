@@ -52,8 +52,10 @@ def precision_non_binary(bin_results, classes):
     precision = 0
     
     for i in range(len(TP)):
-        precision += TP[i] / (TP[i] + FP[i])
-    
+        if TP[i] == 0 and FP[i] == 0:
+            precision += 0
+        else:
+            precision += TP[i] / (TP[i] + FP[i])
     return  (1 / len(TP)) * precision
 
 '''----------------------------------------
@@ -67,7 +69,10 @@ def recall_non_binary(bin_results, classes):
     recall = 0
     
     for i in range(len(TP)):
-        recall += TP[i] / (TP[i] + FN[i])
+        if FN[i] == 0 and TP[i] == 0:
+            recall += 0
+        else:
+            recall += TP[i] / (TP[i] + FN[i])
     
     return (1 / len(TP)) * recall
 
