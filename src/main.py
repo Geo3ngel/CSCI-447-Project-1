@@ -3,11 +3,15 @@
 @authors     George Engel, Troy Oster, Dana Parker, Henry Soule
 @brief       The file that runs the program
 """
+
 import os
 import process_data
 import classifier
 import k_fold_cross_validation
 from path_manager import pathManager as pm
+import xlwt
+from xlwt import Workbook
+import statistics
 
 # Asks for user to select a database from a list presented from current database collection directory.
 def select_database(databases):
@@ -52,25 +56,10 @@ path_manager.set_current_selected_folder(selected_database)
 # Processes the file path of the database into a pre processed database ready to be used as a learning/training set.
 db = process_data.process_database_file(path_manager)
 
-# ### Sanity checks. TODO: move to a unit test case file.
+# Sanity checks.
 normal_data, irregular_data = process_data.identify_missing_data(db)
 
 corrected_data = process_data.extrapolate_data(normal_data, irregular_data, db.get_missing_symbol())
-# print("\nNormal Data:")
-# print_database(normal_data)
-
-# -------------------------------------------------------------
-
-#print("\n\n\n\n\nIrregular Data:")
-#print_database(irregular_data)
-
-# -------------------------------------------------------------
-
-# print("\n\n\n\n\nCorrected Irregular Data:")
-# print_database(corrected_data)
-#print("Irregular data total:", len(irregular_data))
-#print("Regular data total:", len(normal_data))
-#rint("Corrected data total:", len(corrected_data))
 
 # repaired_db is the total database once the missing values have been filled in.
 if len(corrected_data) > 0:
@@ -82,14 +71,8 @@ db.set_data(repaired_db)
 
 process_data.convert(db.get_data())
 
-#print("\n\n\nFINAL DATABASE:\n\n\n")
-#print_database(db.get_data())
-# # -------------------------------------------------------------
-
-# print("\nRunning classifier...")
-# print('\n\n\n\n\nRunning classify_db():')
-
 binned_data = classifier.separate_data(db.get_attr(),db.get_data())
+
 print('\n \n Pre-shuffle')
 print('---------------------')
 pre_shuffle = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, False)
@@ -109,4 +92,41 @@ print("0/1 Loss: ", post_shuffle)
 # print(probs)
 # print('\n\nprobs Products:\n')
 # print(classifier.predict(probs,['a2'],temp_attr_headers,repaired_db[0]))
-print("\nFinished.")
+
+wb = Workbook()
+sheet = wb.add_sheet("FUCK, SHIT.")
+
+sheet.write(0, 0, "PRECISION")
+sheet.write(0, 1, "RECALL")
+sheet.write(0, 2, "0/1 LOSS")
+
+binned_data = classifier.separate_data(db.get_attr(),db.get_data())
+
+precision_list = []
+recall_list = []
+loss_list = []
+
+for i in range(1,1001):
+    precision, recall, loss = k_fold_cross_validation.k_fold(10,binned_data[0],binned_data[1], db, True)
+    
+    precision_list.append(precision)
+    recall_list.append(recall)
+    loss_list.append(loss)
+    
+wb.save('rand_results_'+str(selected_database)+'.xls')
+
+print("\nPRECISION:")
+print("Mean:", statistics.mean(precision_list))
+print("Standard deviation:", statistics.stdev(precision_list))
+
+print("\nRECALL:")
+print("Mean:", statistics.mean(recall_list))
+print("Standard deviation:", statistics.stdev(recall_list))
+
+print("\nLOSS:")
+print("Mean:", statistics.mean(loss_list))
+print("Standard deviation:", statistics.stdev(loss_list))
+
+print("FINISHED.")
+
+# Use this site to plot stuff: https://www.essycode.com/distribution-viewer/

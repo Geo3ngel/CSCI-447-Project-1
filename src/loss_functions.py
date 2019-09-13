@@ -1,3 +1,9 @@
+""" -------------------------------------------------------------
+@file        loss_functions.py
+@authors     George Engel, Troy Oster, Dana Parker, Henry Soule
+@brief       Contains all functionality related to loss functions
+"""
+
 import numpy as np
 from classifier import *
 import os
@@ -11,8 +17,6 @@ from path_manager import pathManager as pm
 @return       The negative natural logarithm of @param prob
 @brief        An implementation of a cross entropy loss function
 """
-def cross_entropy(prob):
-    return -np.log(prob)
 
 # Get true positive guesses
 def true_positives(bin_results, classes):

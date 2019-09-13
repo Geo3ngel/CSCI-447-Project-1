@@ -1,3 +1,10 @@
+""" -------------------------------------------------------------
+@file        path_manager.py
+@authors     George Engel, Troy Oster, Dana Parker, Henry Soule
+@brief       Contains all functionality related to navigating
+             the repository file system
+"""
+
 import os
 from pathlib import Path
 

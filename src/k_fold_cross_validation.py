@@ -1,3 +1,9 @@
+""" -------------------------------------------------------------
+@file        k_fold_cross_validation.py
+@authors     George Engel, Troy Oster, Dana Parker, Henry Soule
+@brief       Contains all functionality related to k-fold cross-validation
+"""
+
 import classifier
 from copy import deepcopy
 from loss_functions import *
@@ -11,9 +17,15 @@ import process_data
 @return    binned_guess_results: [[<incorrect_guesses>, <correct_guesses>]]
                 incorrect_guesses: [[expected answer,incorrect guess]]
                 correct_guesses: [correct guess] 
-@brief     Given a number of folds k, and binned data, as well as bin_lengths, iterate over each bin and separate the data into two subsets, training_data and test_data. 
-           Then classify the training data and calculate the probabilities. Run prediction on each row of the test_data set and return an array of guess results containing guess results
-           associated with each bin, as every bin will be the test bin at some point.
+
+@brief     Given a number of folds k, and binned data, as well as bin_lengths,
+           iterate over each bin and separate the data into two subsets, 
+           training data and test_data. 
+           Then classify the training data and calculate the probabilities.
+           Run prediction on each row of the test_data set and return
+           an array of guess results containing
+           guess results associated with each bin,
+           as every bin will be the test bin at some point.
 """
 def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
     #print (binned_data_set)
@@ -48,8 +60,7 @@ def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
 
         # Calculate the probabilities
         training_probs = classifier.calc_prob_of_response(classified_training_data)
-        #print('\n \n \n Training Probs: \n \n \n')
-        #print(training_probs)
+
         # For each row (sample) in our test_data, try to predict its class
         for test_row in test_data:
             predicted = classifier.predict(training_probs, attr_headers, test_row, db)
@@ -66,9 +77,11 @@ def k_fold(k,binned_data_set,bin_lengths, db, shuffle):
         precision_values.append(precision_non_binary([incorrect_guesses,correct_guesses], class_list))
         percent_correct_bins.append(len(correct_guesses)/(len(incorrect_guesses)+len(correct_guesses)))
         
-    print("PRECISION: ", sum(precision_values) / len(precision_values))
-    print("RECALL: ", sum(recall_values) / len(recall_values))
-    return sum(percent_correct_bins)/len(percent_correct_bins)
+    PRECISION = sum(precision_values) / len(precision_values)
+    RECALL = sum(recall_values) / len(recall_values)
+    # print("PRECISION: ", sum(precision_values) / len(precision_values))
+    # print("RECALL: ", sum(recall_values) / len(recall_values))
+    return PRECISION, RECALL, (sum(percent_correct_bins)/len(percent_correct_bins))
     
         
     #print(" \n \n \n Binned Guess Results\n \n \n")

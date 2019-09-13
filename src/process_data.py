@@ -15,7 +15,7 @@ import os
             (see database.py)
 @brief      Loads the file contents into a database object
 """
-# FIXME: Change to use numpy for efficiency's sake?
+
 def process_database_file(path_manager):
 
     # loads in data file from the selected database directory
@@ -40,7 +40,6 @@ def process_database_file(path_manager):
     
     attributes, classifier_column, classifier_attr_cols, missing_symbol = read_attributes(path_manager.get_current_selected_dir(), data_filename)
 
-    print(attributes)
     return db(db_data, attributes, classifier_column, classifier_attr_cols, missing_symbol)
 
 # Reads in the attribute file from a database, and returns the attributes as a list
@@ -92,14 +91,12 @@ def needs_conversion(database, attribute_col):
         try:
             float(data_row[attribute_col])
         except ValueError:
-            print("Not a float")
             return False
     return True
 
 # Converts a column of quantitative data to catagorical values.
 def equal_width_conversion(database, attribute_col):
     
-    # TODO: Change bin count dynamically at some point?
     bin_count = 3
     
     min = float(database[0][attribute_col])
@@ -115,11 +112,10 @@ def equal_width_conversion(database, attribute_col):
     # Calculate binning width
     width = (max - min)/bin_count
 
-    # TODO: Change these bins from arbitrary to dynamic
     small_bin = []
     medium_bin = []
     large_bin = []
-    # Put stuff in bins
+    # Put data in bins
     for data_row in database:
         if min <= float(data_row[attribute_col]) < (min+width):
             small_bin.append(data_row)
@@ -143,16 +139,14 @@ def equal_width_conversion(database, attribute_col):
     
     return merged_bins
         
-    
-    
-    
-
 """ -------------------------------------------------------------
-@param  database        Input database to operate upon per @brief
-@param  attribute_count The amount of expected attributes for each row of data.
+@param  database           Input database to operate upon per @brief
+@param  attribute_count    The amount of expected attributes for each row of data.
 
-@return     input_db, correction_que : returns the 'clean' rows of data (input_db), and the rows of any malformed data (correction_queue).
-            PS: You aren't dumb Dana -George
+@return     input_db, correction_que :
+            returns the 'clean' rows of data (input_db),
+            and the rows of any malformed data (correction_queue).
+
 @brief      Either removes data with missing parameters,
             or extrapolates missing data using bootstraping methodology.
 """
@@ -197,12 +191,6 @@ def extrapolate_data(normal_data, malformed_data, missing_data_val):
         
     return corrected_data
     
-# Deal with missing attributes
-    # If 'low' number of missing attributes: remove.
-    # Else: Generate a random attribute from a pool of prexisting ones?
-        # Set up a queue of lines that need to do this, so we have the pool already fully generated.
-            # TODO: DOCUMENT THIS CHOICE.*/
-            
 # Fills in the unknown/missing data from existing normal data randomly.
 def bootstrap_selection(normal_data, malformed_row, missing_data_val):
     length = len(malformed_row)
