@@ -86,8 +86,28 @@ Problem statement, including hypothesis
 
 \section{Problem Statement}
 
-\section{Algorithm}
-Per the instructions of the assignment, we implemented the naive Bayes algorithm on the five provided datasets. Given some example $x \in X$, where $X$ is our dataset, naive Bayes predicts the correct class $c$ of $x$ by computing the probabilities of each possible classification for $x$. For class $c$, the probability is denoted as $P(c | a_1, a_2,...,a_d)$ where $a_k$ denotes one of $d$ attribute values in $x$. To compute this probability for each class $c$, the probabilities of each attribute value are computed. For each attribute value $a_k$, we compute $P(c) * \prod^d_{i=0} P(a_i | c)$, where $P(c)$ is the probability of an attribute being classified as class $c$. The predict the correct class for $x$ we compute $\DeclareMath
+\section{The Algorithm}
+Per the instructions of the assignment, we implemented the naive Bayes algorithm on the five provided datasets. Given some example $x \in X$, where $X$ is our dataset, naive Bayes predicts the correct class $c$ of $x$ by computing the probabilities of each possible classification for $x$. For class $c$, the probability is denoted as $P(c | a_1, a_2,...,a_d)$ where $a_k$ denotes one of $d$ attribute values in $x$. To compute this probability for each class $c$, the probabilities of each attribute value are computed. For each attribute value $a_k$, we compute $P(c) * \prod^d_{i=0} P(a_i | c)$, where $P(c)$ is the probability of an attribute being classified as class $c$. The predict the correct class for $x$ we compute $\underset{c \in C}{\mathrm{argmax}}$ $P(c) * \prod^d_{i=0} P(a_i | c)$.
+
+\section{Our Approach}
+% Preprocessing
+
+% Separating and classifying data
+To properly implement naive Bayes on the 5 datasets, we first needed to properly separate and classify each data set. Each data set needed to be separated by class, and then the count and probability of each attribute value for each class needed to be computed. Our approach for this was to create, for each dataset, an associative array, where each possible classifier was a key. For each key, the corresponding values were each their own associative arrays, the keys of which were all the extant attribute values among that class. The values of each key was a set storing the count and probability of each attribute value.
+
+% Shuffling(?)
+
+% Loss functions
+To assess the performance of our class prediction algorithm, we implemented two loss functions: Precision/Recall, and Cross Entropy.
+% Loss function 1: Precision Recall
+The Precision/Recall loss function computes two values, known as precision and recall, to measure the performance of our class prediction algorithm. This loss function utilizes the amounts of true positive, false positive, and false negative classifications for each class. Precision and recall are are computed as follows: 
+$$Precision = \frac{1}{|C|} \sum^{|C|}_{i=1} \frac{TP_i}{TP_i + FP_i}$$
+$$Recall = \frac{1}{|C|} \sum^{|C|}_{i=1} \frac{TP_i}{TP_i + FN_i}$$
+$TP_i$ denotes the number of true positive classifications for class $i$, $FP_i$ denotes the number of false positive classifications for class $i$, and $FN_i$ denotes the number of false negative classifications for class $i$. $C$ is the set of all possible classes. Precision can be interpreted as a measure of how accurate true positive classifications, as it computes the fraction all positive classifications for a class that were truly positive. Recall measures accuracy among the values for each class that should have been positive, as it computes the fraction of all values that truly belonged to a class that were classified as positive.
+
+
+% Loss function 2: Cross Entropy
+\section{Results}
 
 % Acknowledgements should go at the end, before appendices and references
 
