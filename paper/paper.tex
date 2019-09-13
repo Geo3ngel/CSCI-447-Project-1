@@ -148,25 +148,27 @@ TODO: DANA PUT HERE
 
 \section{Conclusions}
 
+The graphs shown are of the difference between the normal distribution of the values obtains from our loss functions for the iris data set, and the averages of values obtains from our loss functions for the iris data set with a 10\% noise function applied. 
+
 \subsection{Breast Cancer Wisconsin}
 
 \begin{figure}[!hbp] % Credit to stack exchange user Masroor and user Stefan Kottwitz for the implementation of side by side figures in LaTeX
     \centering
     \begin{minipage}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{bc-l-ms.png}
-        \includegraphics[width=\textwidth]{bc-l-ds.png}
+        \includegraphics[width=\textwidth]{bs-l-ms.png}
+        \includegraphics[width=\textwidth]{bs-l-ds.png}
         \caption{Average difference between 0/1 Loss for normal data set and noise data set for \emph{Breast Cancer Wisconsin} (over 1,000 iterations)}
     \end{minipage}
     \hfill
     \begin{minipage}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{bc-p-ms.png}
-        \includegraphics[width=\textwidth]{bc-l-ds.png}
+        \includegraphics[width=\textwidth]{bs-p-ms.png}
+        \includegraphics[width=\textwidth]{bs-l-ds.png}
         \caption{Average difference between Precision for normal data set and noise data set for\emph{Breast Cancer Wisconsin} (over 1,000 iterations)}
     \end{minipage}
     \hfill
     \begin{minipage}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{bc-r-ms.png}
-        \includegraphics[width=\textwidth]{bc-r-ds.png}
+        \includegraphics[width=\textwidth]{bs-r-ms.png}
+        \includegraphics[width=\textwidth]{bs-r-ds.png}
         \caption{Average difference between Recall for normal data set and noise data set for \emph{Breast Cancer Wisconsin} (over 1,000 iterations)}
     \end{minipage}
 \end{figure}
@@ -215,10 +217,8 @@ TODO: DANA PUT HERE
         \caption{Average difference between Recall for normal data set and noise data set for \emph{Iris} (over 1,000 iterations)}
     \end{minipage}
 \end{figure}
-
-The graphs shown are of the normal distribution of the values obtains from our loss functions for the iris data set, with 10\% noise applied. 
-
-To construct these graphs, we ran 1,000 iterations of 10-fold cross-validation and found the average for the 0-1 Loss, precision, and recall against the Iris database. For the graph relating to Iris' recall over 1,000 iterations of 10-fold cross-validation, we are 95\% confident that the true recall for our naive Bayes algorithm's ability to classify test data is between 0.359 and 0.386 via a 95\% confidence interval. Regarding 0-1 Loss (the proportion of correct guesses by the naive Bayes algorithm), we are 95\% confident that the true 0-1 Loss for our naive Bayes algorithm's ability to classify test data is between 0.884 and 0.956 via a 95\% confidence interval. Finally, regarding precision, we are 95\% confident that the true precision for our naive Bayes algorithm's ability to classify test data is between 0.394 and 0.405 via a 95\% confidence interval.
+TODO: Change up for difference!
+To construct these graphs, we ran 1,000 iterations of 10-fold cross-validation and found the average for the 0-1 Loss, precision, and recall against the Iris database. For the graph relating to Iris' recall over 1,000 iterations of 10-fold cross-validation, we are 95\% confident that the true recall for our naive Bayes algorithm's ability to classify test data is between 0.0272 and 0.180 via a 95\% confidence interval. Regarding 0-1 Loss (the proportion of correct guesses by the naive Bayes algorithm), we are 95\% confident that the true 0-1 Loss for our naive Bayes algorithm's ability to classify test data is between 0.0272 and 0.180 via a 95\% confidence interval. Finally, regarding precision, we are 95\% confident that the true precision for our naive Bayes algorithm's ability to classify test data is between 0.010 and 0.007 via a 95\% confidence interval.
 
 \subsection{Soybean}
 
@@ -272,3 +272,6 @@ To construct these graphs, we ran 1,000 iterations of 10-fold cross-validation a
 3. Nédellec, Claire, and Céline Rouveirol, editors. “Machine Learning: ECML-98.” Lecture Notes in Computer Science, Springer Berlin Heidelberg, 1998. pp. 1-2., doi:10.1007/bfb0026664.}
 
 \end{document}
+
+BACKUP: 
+To construct these graphs, we ran 1,000 iterations of 10-fold cross-validation and found the average for the 0-1 Loss, precision, and recall against the Iris database. For the graph relating to Iris' recall over 1,000 iterations of 10-fold cross-validation, we are 95\% confident that the true recall for our naive Bayes algorithm's ability to classify test data is between 0.359 and 0.386 via a 95\% confidence interval. Regarding 0-1 Loss (the proportion of correct guesses by the naive Bayes algorithm), we are 95\% confident that the true 0-1 Loss for our naive Bayes algorithm's ability to classify test data is between 0.884 and 0.956 via a 95\% confidence interval. Finally, regarding precision, we are 95\% confident that the true precision for our naive Bayes algorithm's ability to classify test data is between 0.394 and 0.405 via a 95\% confidence interval.
